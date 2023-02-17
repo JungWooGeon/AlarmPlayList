@@ -3,4 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <string name="kr_alarm">알람</string>
+    <string name="kr_playlist">플레이리스트</string>
 </resources>
