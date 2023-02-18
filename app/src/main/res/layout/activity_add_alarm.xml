@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TimePicker
+        android:id="@+id/time_picker"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="50dp"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        android:timePickerMode="spinner"
+        app:layout_constraintBottom_toTopOf="@id/set_alarm_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="2" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/set_alarm_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="20dp"
+        app:layout_constraintBottom_toBottomOf="@id/btn_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/time_picker"
+        app:layout_constraintVertical_weight="2.5">
+
+        <TextView
+            android:id="@+id/alarm_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="알람음"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/first_line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/alarm_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:switchMinWidth="50dp"
+            android:switchPadding="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/alarm_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@+id/alarm_time"
+            app:layout_constraintTop_toTopOf="@id/alarm_time" />
+
+        <TextView
+            android:id="@+id/playlist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="플레이리스트 1"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@+id/alarm_time"
+            app:layout_constraintTop_toBottomOf="@+id/alarm_time" />
+
+        <View
+            android:id="@+id/first_line"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginVertical="10dp"
+            android:background="@color/line"
+            app:layout_constraintBottom_toTopOf="@id/vibrate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/playlist_name" />
+
+        <TextView
+            android:id="@+id/vibrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="진동"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/second_line"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/first_line" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/vibrate_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:switchMinWidth="50dp"
+            android:switchPadding="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/vibrate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@+id/vibrate"
+            app:layout_constraintTop_toTopOf="@id/vibrate" />
+
+        <View
+            android:id="@+id/second_line"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginVertical="10dp"
+            android:background="@color/line"
+            app:layout_constraintBottom_toTopOf="@id/repeat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vibrate" />
+
+        <TextView
+            android:id="@+id/repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="반복"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/second_line" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/repeat_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:switchMinWidth="50dp"
+            android:switchPadding="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/repeat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@+id/repeat"
+            app:layout_constraintTop_toTopOf="@id/repeat" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/set_alarm_layout">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_save"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="저장"
+            app:layout_constraintBottom_toBottomOf="@id/btn_cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_cancel" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
