@@ -32,7 +32,7 @@ class AlarmAdapter :
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.itemSwitchToggle
-        holder.itemAlarmTime.setText("오전 08:30")
+        holder.itemAlarmTime.setText(list[position])
         holder.itemAlarmPlaylist.setText("플레이리스트 $position")
 
         var colorId = 0
@@ -46,6 +46,6 @@ class AlarmAdapter :
     }
 
     override fun getItemCount(): Int {
-        return 10
+        return list.size
     }
 }
