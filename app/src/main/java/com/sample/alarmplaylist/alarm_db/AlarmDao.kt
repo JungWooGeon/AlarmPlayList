@@ -1,6 +1,7 @@
 package com.sample.alarmplaylist.alarm_db
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 
@@ -11,4 +12,7 @@ interface AlarmDao {
 
     @Insert
     fun insert(alarm: Alarm)
+
+    @Delete
+    fun deleteAlarm(alarm: Alarm)
 }

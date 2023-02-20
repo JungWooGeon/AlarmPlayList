@@ -1,6 +1,7 @@
 package com.sample.alarmplaylist.ui.alarm
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import com.sample.alarmplaylist.alarm_db.Alarm
@@ -17,6 +18,14 @@ class AddAlarmActivity : AppCompatActivity() {
 
         binding = ActivityAddAlarmBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val hour = intent.getStringExtra(AlarmFragment.INTENT_ALARM_HOUR)
+        val minute = intent.getStringExtra(AlarmFragment.INTENT_ALARM_MINUTE)
+
+        if (hour != null && minute != null) {
+            binding.timePicker.hour = hour.toInt()
+            binding.timePicker.minute = minute.toInt()
+        }
 
         initButton()
     }

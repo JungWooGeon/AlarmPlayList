@@ -6,4 +6,5 @@
 
     <string name="kr_alarm">알람</string>
     <string name="kr_playlist">플레이리스트</string>
+    <string name="delete">삭제</string>
 </resources>
