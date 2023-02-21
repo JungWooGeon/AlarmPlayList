@@ -21,7 +21,7 @@
         </activity>
 
         <activity
-            android:name=".ui.alarm.AddAlarmActivity"
+            android:name=".alarm.add_alarm.AddAlarmActivity"
             android:exported="true" />
     </application>
 

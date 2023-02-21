@@ -1,4 +1,4 @@
-package com.sample.alarmplaylist.ui.playlist
+package com.sample.alarmplaylist.playlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

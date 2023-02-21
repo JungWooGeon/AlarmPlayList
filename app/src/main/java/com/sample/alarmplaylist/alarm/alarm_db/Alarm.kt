@@ -1,4 +1,4 @@
-package com.sample.alarmplaylist.alarm_db
+package com.sample.alarmplaylist.alarm.alarm_db
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

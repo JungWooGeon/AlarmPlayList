@@ -1,4 +1,4 @@
-package com.sample.alarmplaylist.ui.alarm
+package com.sample.alarmplaylist.alarm.adapter
 
 import android.view.*
 import android.view.View.OnCreateContextMenuListener

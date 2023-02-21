@@ -1,4 +1,4 @@
-package com.sample.alarmplaylist.ui.playlist
+package com.sample.alarmplaylist.playlist
 
 import android.os.Bundle
 import android.view.LayoutInflater
