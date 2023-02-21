@@ -23,4 +23,12 @@ class AlarmViewModel: ViewModel() {
         model.readAlarmData(context)
         alarmList.value = model.alarmList
     }
+
+    fun getOnOffList(): ArrayList<Boolean> {
+        return model.onOffList
+    }
+
+    fun setCheckedChange(context: Context, pos: Int, isChecked: Boolean) {
+        model.setCheckedChange(context, pos, isChecked)
+    }
 }

@@ -19,7 +19,7 @@ class AlarmFragment : Fragment() {
 
     // @TODO
     // 1. 알람 기록할 때, 다른 여부도 저장
-    // 2. 알람 기능 추가
+    // 2. 알람 기능 추가 (On Off 설정은 완료)
     // 3. 알람음, 진동 설정 하기
     
     companion object {
@@ -27,6 +27,7 @@ class AlarmFragment : Fragment() {
         const val INTENT_ALARM_HOUR = "alarmHour"
         const val INTENT_ALARM_MINUTE = "alarmMinute"
         const val INTENT_ALARM_ID = "alarmId"
+        const val INTENT_ALARM_ON_OFF = "alarmOnOff"
     }
 
     private var _binding: FragmentAlarmBinding? = null
@@ -79,18 +80,24 @@ class AlarmFragment : Fragment() {
         val alarmRecyclerViewAdapter = AlarmAdapter()
 
         // Item 클릭 시 알람 정보를 변경할 수 있는 화면으로 전환
-        alarmRecyclerViewAdapter.listener = (object: AlarmAdapter.OnItemClickListener {
+        alarmRecyclerViewAdapter.listener = (object: AlarmAdapter.AdapterListener {
             override fun onItemClick(v: View, pos: Int) {
                 val intent = Intent(ct!!.context, AddAlarmActivity::class.java)
                 intent.putExtra(INTENT_ALARM_HOUR, viewModel.getAlarmInfo()?.get(pos)?.alarmHour)
                 intent.putExtra(INTENT_ALARM_MINUTE, viewModel.getAlarmInfo()?.get(pos)?.alarmMinute)
                 intent.putExtra(INTENT_ALARM_ID, viewModel.getAlarmInfo()?.get(pos)?.id)
+                intent.putExtra(INTENT_ALARM_ON_OFF, viewModel.getOnOffList()[pos])
                 startActivity(intent)
+            }
+
+            override fun onCheckedChange(pos: Int, isChecked: Boolean) {
+                viewModel.setCheckedChange(requireActivity().applicationContext, pos, isChecked)
             }
         })
 
         // Adapter 에 있는 list 에 DB 에서 읽어온 list 반영
         list.forEach { alarmRecyclerViewAdapter.list.add(it) }
+        viewModel.getOnOffList().forEach { alarmRecyclerViewAdapter.onOff.add(it)}
 
         binding.alarmRecyclerview.apply {
             setHasFixedSize(true)

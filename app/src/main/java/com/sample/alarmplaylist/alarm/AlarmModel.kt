@@ -8,6 +8,7 @@ import com.sample.alarmplaylist.alarm.alarm_db.AlarmDataBase
 class AlarmModel {
     var list: List<Alarm>? = null
     val alarmList: ArrayList<String> = ArrayList()
+    val onOffList: ArrayList<Boolean> = ArrayList()
 
     fun deleteAlarm(context: Context, id: Int) {
         val db : AlarmDataBase = Room.databaseBuilder(context, AlarmDataBase::class.java,
@@ -24,6 +25,7 @@ class AlarmModel {
 
     fun readAlarmData(context: Context) {
         alarmList.clear()
+        onOffList.clear()
 
         // DB 에서 데이터를 읽어온 후 adapter 에 반영
         val db : AlarmDataBase = Room.databaseBuilder(context, AlarmDataBase::class.java,
@@ -48,10 +50,32 @@ class AlarmModel {
                 }
 
                 alarmList.add(result)
+                onOffList.add(it.onOff == 1)
             }
         }
 
         thread.start()
         thread.join()
+    }
+
+    fun setCheckedChange(context: Context, pos: Int, isChecked: Boolean) {
+        val db : AlarmDataBase = Room.databaseBuilder(context, AlarmDataBase::class.java,
+            AlarmFragment.ALARM_DB
+        ).build()
+
+        val thread = Thread {
+            db.alarmDao().updateAlarm(
+                Alarm(
+                    list?.get(pos)?.id, list?.get(pos)?.alarmHour!!,
+                    list?.get(pos)?.alarmMinute!!,
+                    if (isChecked) { 1 } else { 0 }
+                )
+            )
+        }
+
+        thread.start()
+        thread.join()
+
+        readAlarmData(context)
     }
 }

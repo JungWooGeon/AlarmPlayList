@@ -2,6 +2,7 @@ package com.sample.alarmplaylist.alarm.adapter
 
 import android.view.*
 import android.view.View.OnCreateContextMenuListener
+import android.widget.AdapterView
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -11,12 +12,14 @@ import com.sample.alarmplaylist.R
 
 class AlarmAdapter : RecyclerView.Adapter<AlarmAdapter.MyViewHolder>() {
 
-    interface OnItemClickListener {
-        fun onItemClick(v:View, pos : Int)
+    interface AdapterListener {
+        fun onItemClick(v:View, pos: Int)
+        fun onCheckedChange(pos: Int, isChecked: Boolean)
     }
-    var listener : OnItemClickListener? = null
+    var listener: AdapterListener? = null
 
     val list = ArrayList<String>()
+    val onOff = ArrayList<Boolean>()
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), OnCreateContextMenuListener {
         var cardLayout: ConstraintLayout = itemView.findViewById((R.id.card_layout))
@@ -46,7 +49,8 @@ class AlarmAdapter : RecyclerView.Adapter<AlarmAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.itemSwitchToggle
+        holder.itemSwitchToggle.isChecked = onOff[position]
+
         holder.itemAlarmTime.setText(list[position])
         holder.itemAlarmPlaylist.setText("플레이리스트 $position")
 
@@ -61,6 +65,10 @@ class AlarmAdapter : RecyclerView.Adapter<AlarmAdapter.MyViewHolder>() {
 
         holder.cardLayout.setOnClickListener {
             listener?.onItemClick(holder.itemView, position)
+        }
+
+        holder.itemSwitchToggle.setOnCheckedChangeListener { _, isChecked ->
+            listener?.onCheckedChange(position, isChecked)
         }
     }
 

@@ -48,16 +48,19 @@ class AddAlarmActivity : AppCompatActivity() {
                         Alarm(
                             null,
                             binding.timePicker.hour.toString(),
-                            binding.timePicker.minute.toString()
+                            binding.timePicker.minute.toString(),
+                            1
                         )
                     )
                 }
             } else {
+                val onOff = intent.getBooleanExtra(AlarmFragment.INTENT_ALARM_ON_OFF, true)
                 Thread {
                     db.alarmDao().updateAlarm(
                         Alarm(
                             id, binding.timePicker.hour.toString(),
-                            binding.timePicker.minute.toString()
+                            binding.timePicker.minute.toString(),
+                            if (onOff) { 1 } else { 0 }
                         )
                     )
                 }
