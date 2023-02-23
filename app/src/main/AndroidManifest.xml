@@ -3,6 +3,7 @@
     package="com.sample.alarmplaylist">
 
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -28,6 +29,8 @@
         <receiver
             android:name=".alarm.receiver.AlarmReceiver"
             android:exported="false" />
+
+        <service android:name=".alarm.receiver.AlarmService" />
     </application>
 
 </manifest>

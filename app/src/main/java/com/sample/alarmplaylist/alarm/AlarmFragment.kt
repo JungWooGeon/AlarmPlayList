@@ -1,15 +1,13 @@
 package com.sample.alarmplaylist.alarm
 
-import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,6 +16,7 @@ import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.alarm.adapter.AlarmAdapter
 import com.sample.alarmplaylist.alarm.add_alarm.AddAlarmActivity
 import com.sample.alarmplaylist.alarm.receiver.AlarmReceiver
+import com.sample.alarmplaylist.alarm.receiver.AlarmService
 import com.sample.alarmplaylist.databinding.FragmentAlarmBinding
 import java.util.*
 
@@ -27,9 +26,14 @@ import java.util.*
 class AlarmFragment : Fragment() {
 
     // @TODO
-    // 1. 알람 기록할 때, 다른 여부도 저장
-    // 2. 알람 기능 추가 (On Off 설정은 완료)
-    // 3. 알람음, 진동 설정 하기
+    // 1. notification 에 알람 해제 버튼 추가 (클릭 시 알람이 해제되고 필요하면 알람 앱 실행까지 하게 구현)
+    // 2. 알람 저장 시 알람 여부 on 으로 설정하기
+    // 3. 알람 해제 시 알람 여부 off 로 변경하기
+    // 4. 알람 기록할 때, 다른 여부도 저장
+    // 5. 알람음 설정 기능 (알람음 설정 화면 포함)
+    // 6. 진동 기능 구현하기
+    // 알람 참고해보기 : http://batmask.net/index.php/2021/03/12/786/
+    //                 https://hanyeop.tistory.com/192
 
     companion object {
         const val ALARM_DB = "alarmDB"
@@ -49,6 +53,8 @@ class AlarmFragment : Fragment() {
     private var ct: ViewGroup? = null
     private lateinit var viewModel: AlarmViewModel
 
+    private lateinit var serviceIntent: Intent
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,6 +67,8 @@ class AlarmFragment : Fragment() {
         val root: View = binding.root
 
         viewModel.alarmList.observe(viewLifecycleOwner) { list -> initRecyclerView(list) }
+
+        serviceIntent = Intent(requireActivity(), AlarmService::class.java)
 
         initClock()
         initButton()
@@ -111,53 +119,36 @@ class AlarmFragment : Fragment() {
                 startActivity(intent)
             }
 
-            @SuppressLint("UnspecifiedImmutableFlag")
             override fun onCheckedChange(pos: Int, isChecked: Boolean) {
                 // alarm switch 를 누르면 alarm 실행 혹은 취소
                 viewModel.setCheckedChange(requireActivity().applicationContext, pos, isChecked)
 
+                val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                val intent = Intent(requireActivity(), AlarmReceiver::class.java)
+                intent.putExtra("알람음", RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
+                val pendingIntent = PendingIntent.getBroadcast(
+                    requireActivity(),
+                    viewModel.getAlarmInfo()?.get(pos)?.id!!,
+                    intent,
+                    ALARM_FLAG
+                )
+
                 if (isChecked) {
                     val calendar = Calendar.getInstance().apply {
-                        set(
-                            Calendar.HOUR_OF_DAY,
-                            viewModel.getAlarmInfo()?.get(pos)?.alarmHour!!.toInt()
-                        )
-                        set(
-                            Calendar.MINUTE,
-                            viewModel.getAlarmInfo()?.get(pos)?.alarmMinute!!.toInt()
-                        )
+                        set(Calendar.HOUR_OF_DAY, viewModel.getAlarmInfo()?.get(pos)?.alarmHour!!.toInt())
+                        set(Calendar.MINUTE, viewModel.getAlarmInfo()?.get(pos)?.alarmMinute!!.toInt())
 
                         if (before(Calendar.getInstance())) {
                             add(Calendar.DATE, 1)
                         }
                     }
 
-                    val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                    val pendingIntent = PendingIntent.getBroadcast(
-                        requireActivity(),
-                        viewModel.getAlarmInfo()?.get(pos)?.id!!,
-                        Intent(requireActivity(), AlarmReceiver::class.java),
-                        ALARM_FLAG
-                    )
-
-                    // DOZE MODE 시에도 사용하려면
-                    // alarmManager.setAndAllowWhileIdle()
-                    // alarmManager.setExactAndAllowWhileIdle()
-
-                    alarmManager.setExact(
-                        // REALTIME_WAKE_UP 과의 차이 : REALTIME 을 더 권장 -> 휴대폰이 부팅되는 시점부터? 만약 서울에 있는데 휴대폰은 미국 시간으로 되어 있다면?
-                        // 여기서는 Calendar 를 사용했기 때문에 RTC_WAKEUP
+                    alarmManager.setExactAndAllowWhileIdle(
                         AlarmManager.RTC_WAKEUP,
                         calendar.timeInMillis,
                         pendingIntent
                     )
                 } else {
-                    val pendingIntent = PendingIntent.getBroadcast(
-                        requireActivity(),
-                        viewModel.getAlarmInfo()?.get(pos)?.id!!,
-                        Intent(requireActivity(), AlarmReceiver::class.java),
-                        ALARM_FLAG
-                    )
                     pendingIntent?.cancel()
                 }
             }
@@ -178,6 +169,20 @@ class AlarmFragment : Fragment() {
         binding.btnAlarmAdd.setOnClickListener {
             val intent = Intent(ct!!.context, AddAlarmActivity::class.java)
             startActivity(intent)
+        }
+
+        serviceIntent.putExtra(AlarmReceiver.ALARM_URI, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
+        binding.btnStartService.setOnClickListener {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                requireActivity().startForegroundService(serviceIntent)
+            }
+            else{
+                requireActivity().startService(serviceIntent)
+            }
+        }
+
+        binding.btnStopService.setOnClickListener {
+            requireActivity().stopService(serviceIntent)
         }
     }
 }
