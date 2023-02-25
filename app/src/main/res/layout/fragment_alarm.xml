@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_weight="1" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/btn_alarm_add"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -51,15 +51,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="서비스 시작"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_stop_service"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/btn_start_service"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_start_service"
-        app:layout_constraintTop_toTopOf="@id/btn_start_service"
-        android:text="서비스 종료"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

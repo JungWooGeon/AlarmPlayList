@@ -16,16 +16,18 @@ class AlarmReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val serviceIntent = Intent(context, AlarmService::class.java)
+        serviceIntent.putExtra("id", intent.getIntExtra("id", -1))
         serviceIntent.putExtra(ALARM_URI, intent.getParcelableExtra<Uri>(ALARM_URI))
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             context.startForegroundService(serviceIntent)
         }
         else{
             context.startService(serviceIntent)
         }
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            context.stopService(serviceIntent)
-        }, 3000)
+//
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            context.stopService(serviceIntent)
+//        }, 3000)
     }
 }

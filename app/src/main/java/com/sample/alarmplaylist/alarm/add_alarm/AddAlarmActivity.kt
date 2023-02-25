@@ -1,8 +1,10 @@
 package com.sample.alarmplaylist.alarm.add_alarm
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
+import com.sample.alarmplaylist.MainActivity
 import com.sample.alarmplaylist.alarm.AlarmFragment
 import com.sample.alarmplaylist.alarm.alarm_db.Alarm
 import com.sample.alarmplaylist.alarm.alarm_db.AlarmDataBase
@@ -34,6 +36,8 @@ class AddAlarmActivity : AppCompatActivity() {
 
     private fun initButton() {
         binding.btnCancel.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            setResult(RESULT_CANCELED, intent)
             finish()
         }
 
@@ -54,13 +58,12 @@ class AddAlarmActivity : AppCompatActivity() {
                     )
                 }
             } else {
-                val onOff = intent.getBooleanExtra(AlarmFragment.INTENT_ALARM_ON_OFF, true)
                 Thread {
                     db.alarmDao().updateAlarm(
                         Alarm(
                             id, binding.timePicker.hour.toString(),
                             binding.timePicker.minute.toString(),
-                            if (onOff) { 1 } else { 0 }
+                            1
                         )
                     )
                 }
@@ -69,6 +72,8 @@ class AddAlarmActivity : AppCompatActivity() {
             thread.start()
             thread.join()
 
+            val intent = Intent(this, MainActivity::class.java)
+            setResult(RESULT_OK, intent)
             finish()
         }
     }
