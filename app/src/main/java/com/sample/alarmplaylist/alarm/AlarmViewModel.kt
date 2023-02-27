@@ -31,4 +31,8 @@ class AlarmViewModel: ViewModel() {
     fun setCheckedChange(context: Context, pos: Int, isChecked: Boolean) {
         model.setCheckedChange(context, pos, isChecked)
     }
+
+    fun setAlarmOff(context: Context, id: Int, hour: String, minute: String) {
+        model.setAlarmOff(context, id, hour, minute)
+    }
 }

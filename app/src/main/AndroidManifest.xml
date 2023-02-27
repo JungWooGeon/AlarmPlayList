@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.sample.alarmplaylist">
 
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -26,11 +28,21 @@
             android:name=".alarm.add_alarm.AddAlarmActivity"
             android:exported="true" />
 
+        <activity
+            android:name=".playlist.AddPlaylistActivity"
+            android:exported="true" />
+
         <receiver
             android:name=".alarm.receiver.AlarmReceiver"
             android:exported="false" />
 
         <service android:name=".alarm.receiver.AlarmService" />
     </application>
+
+    <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
 
 </manifest>

@@ -1,17 +1,15 @@
 package com.sample.alarmplaylist.alarm
 
-import android.app.Activity
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,14 +28,13 @@ import java.util.*
 class AlarmFragment : Fragment() {
 
     // @TODO
-    // 1. noti player, 화면 하단 player 구현
-    // 2. 알람 저장 시 알람 여부 on 으로 설정하고 실제 알람 셋팅하기
-    // 3. 알람 울리고 나면 알람 여부 off 로 설정하기
+    // 2. 알람 저장 시 알람 여부 on 으로 설정하고 실제 알람 셋팅하기 o
+    // 3. 알람 울리고 나면 알람 여부 off 로 설정하기 o
     // 4. 알람 기록할 때, 다른 여부도 저장
     // 5. 알람음 설정 기능 (알람음 설정 화면 포함)
     // 6. 진동 기능 구현하기
     // 7. 이미 실행되고 있는 미디어가 있으면 알람 or 음악 x
-    // 8. 알람이 시작되면 DB에 있는 알람 on off 를 off 로 설정해야 한다.
+    // 8. youtube 설정 및 playlist 화면 구현
 
     // 플레이리스트 : 기본 알람음은 기본 플레이리스트로 만들어져 있음
 
@@ -47,7 +44,14 @@ class AlarmFragment : Fragment() {
     //                    https://anhana.tistory.com/17
 
     // 테스트 순서 : 서비스 시작 버튼 (or 알람 설정) -> 노티 -> 노티 클릭 -> 메인 액티비티 실행
-    //             -> 음악 플레이어 확인 -> 정지 버튼 으로 음악 종료 -> 이렇게 설정된 플레이리스트는 언제든지 재생버튼으로 재실행 가능
+    //             -> 음악 종료
+    //              플레이리스트 -> 플레이리스트 추가('''에서 이름 변경) -> 플레이리스트에서 음악 추가 (검색 액티비티)
+    //             -> 알람 설정 시 저장해놓았던 플레이리스트를 알람음으로 설정
+    //             -> 알람 시 기본 알람음으로 설정되어있으면 foreground service,
+    //                플레이리스트로 설정되어있으면 youtube player activity 실행하여 플레이리스트 차례대로 실행
+    //                (youtube player activity 는 종료 시 음악이 종료됨)
+    
+    // 추가 구현 : 저장되어 있는 음악들 중 선택하여 플레이리스트에 추가 (youtube 와 같이는 불가)
 
     companion object {
         const val ALARM_DB = "alarmDB"
@@ -68,8 +72,6 @@ class AlarmFragment : Fragment() {
 
     private lateinit var serviceIntent: Intent
 
-    lateinit var prefs: SharedPreferences
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -84,12 +86,17 @@ class AlarmFragment : Fragment() {
         viewModel.alarmList.observe(viewLifecycleOwner) { list -> initRecyclerView(list) }
 
         serviceIntent = Intent(requireActivity(), AlarmService::class.java)
+        if (requireActivity().intent.getBooleanExtra("off", false)) {
+            requireActivity().stopService(serviceIntent)
+            viewModel.setAlarmOff(requireActivity(),
+                requireActivity().intent.getIntExtra("id", -1),
+                requireActivity().intent.getStringExtra("hour").toString(),
+                requireActivity().intent.getStringExtra("minute").toString()
+            )
+        }
 
         initClock()
         initButton()
-
-        // @TODO SharedPreferences 확인하여 재생 중인 ID 가 있는지 확인 후 화면 작업
-        prefs = ct?.context?.getSharedPreferences("playAlarmId", Context.MODE_PRIVATE)!!
 
         return root
     }
@@ -154,17 +161,6 @@ class AlarmFragment : Fragment() {
             val intent = Intent(ct!!.context, AddAlarmActivity::class.java)
             startActivity(intent)
         }
-
-        serviceIntent.putExtra("id", 26)
-        serviceIntent.putExtra(AlarmReceiver.ALARM_URI, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
-        binding.btnStartService.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                requireActivity().startForegroundService(serviceIntent)
-            }
-            else{
-                requireActivity().startService(serviceIntent)
-            }
-        }
     }
 
     private fun setAlarm(pos: Int, isChecked: Boolean) {
@@ -174,6 +170,8 @@ class AlarmFragment : Fragment() {
         val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(requireActivity(), AlarmReceiver::class.java).apply {
             putExtra("id", viewModel.getAlarmInfo()?.get(pos)?.id)
+            putExtra("hour", viewModel.getAlarmInfo()?.get(pos)?.alarmHour)
+            putExtra("minute", viewModel.getAlarmInfo()?.get(pos)?.alarmMinute)
             putExtra("알람음", RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
         }
         val pendingIntent = PendingIntent.getBroadcast(requireActivity(), viewModel.getAlarmInfo()?.get(pos)?.id!!, intent, ALARM_FLAG)

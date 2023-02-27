@@ -78,4 +78,17 @@ class AlarmModel {
 
         readAlarmData(context)
     }
+
+    fun setAlarmOff(context: Context, id: Int, hour: String, minute: String) {
+        val db : AlarmDataBase = Room.databaseBuilder(context, AlarmDataBase::class.java,
+            AlarmFragment.ALARM_DB
+        ).build()
+
+        val thread = Thread {
+            db.alarmDao().updateAlarm(Alarm(id, hour, minute, 0))
+        }
+
+        thread.start()
+        thread.join()
+    }
 }

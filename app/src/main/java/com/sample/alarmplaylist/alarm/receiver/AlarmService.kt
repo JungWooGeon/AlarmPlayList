@@ -11,8 +11,12 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.room.Room
 import com.sample.alarmplaylist.MainActivity
 import com.sample.alarmplaylist.R
+import com.sample.alarmplaylist.alarm.AlarmFragment
+import com.sample.alarmplaylist.alarm.alarm_db.Alarm
+import com.sample.alarmplaylist.alarm.alarm_db.AlarmDataBase
 
 class AlarmService : Service() {
 
@@ -42,6 +46,11 @@ class AlarmService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        notifyNotification(this,
+            intent!!.getIntExtra("id", -1),
+            intent.getStringExtra("hour")!!,
+            intent.getStringExtra("minute")!!)
+
         //mp = MediaPlayer.create(this, intent?.getParcelableExtra(AlarmReceiver.ALARM_URI)!!)
         mp = MediaPlayer.create(this, R.raw.test)
         mp.setOnCompletionListener {
@@ -49,9 +58,7 @@ class AlarmService : Service() {
         }
         mp.start()
 
-        notifyNotification(this, intent!!.getIntExtra("id", -1))
-
-        return START_STICKY
+        return START_NOT_STICKY
     }
 
     private fun createNotificationChannel(context: Context) {
@@ -66,7 +73,7 @@ class AlarmService : Service() {
         }
     }
 
-    private fun notifyNotification(context: Context, id: Int) {
+    private fun notifyNotification(context: Context, id: Int, hour: String, minute: String) {
         // @TODO SharedPreferences 에 실행되는 id 추가 하기
         val prefs = context.getSharedPreferences("playAlarmId", Context.MODE_PRIVATE)
         with(prefs.edit()) {
@@ -79,6 +86,10 @@ class AlarmService : Service() {
         intent.apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             action = Intent.ACTION_MAIN
+            putExtra("off", true)
+            putExtra("id", id)
+            putExtra("hour", hour)
+            putExtra("minute", minute)
         }
 
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, ALARM_FLAG)
