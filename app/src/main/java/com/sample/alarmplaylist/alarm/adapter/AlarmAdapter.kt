@@ -16,6 +16,7 @@ class AlarmAdapter : RecyclerView.Adapter<AlarmAdapter.MyViewHolder>() {
         fun onItemClick(v:View, pos: Int)
         fun onCheckedChange(pos: Int, isChecked: Boolean)
     }
+
     var listener: AdapterListener? = null
 
     val list = ArrayList<String>()

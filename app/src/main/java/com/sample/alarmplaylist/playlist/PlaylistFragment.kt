@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.sample.alarmplaylist.databinding.FragmentPlaylistBinding
+import com.sample.alarmplaylist.playlist.add_playlist.AddPlaylistActivity
 
 class PlaylistFragment : Fragment() {
 
