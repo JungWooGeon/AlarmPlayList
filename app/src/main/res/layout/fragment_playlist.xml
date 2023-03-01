@@ -6,12 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".playlist.PlaylistFragment">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/add_playlist"
+    <TextView
+        android:id="@+id/playlist_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="음악 추가"
+        android:layout_marginStart="30dp"
+        android:text="플레이리스트 "
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btn_add_list"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_playlist_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/playlist_label" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/playlist"
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="30dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="@id/btn_add_list"
+        app:layout_constraintStart_toStartOf="@id/playlist_label"
+        app:layout_constraintTop_toBottomOf="@id/playlist_label"
+        app:layout_constraintBottom_toTopOf="@id/btn_add_music"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/btn_add_music"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_add"
+        app:layout_constraintEnd_toEndOf="@id/btn_add_list"
+        app:layout_constraintTop_toBottomOf="@id/playlist" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/music_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/playlist"
+        app:layout_constraintStart_toStartOf="@id/playlist"
+        app:layout_constraintTop_toBottomOf="@id/btn_add_music" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

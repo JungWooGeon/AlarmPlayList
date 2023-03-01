@@ -2,7 +2,6 @@ package com.sample.alarmplaylist.alarm.adapter
 
 import android.view.*
 import android.view.View.OnCreateContextMenuListener
-import android.widget.AdapterView
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -44,7 +43,7 @@ class AlarmAdapter : RecyclerView.Adapter<AlarmAdapter.MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup,
                                     viewType: Int): MyViewHolder {
         val cardView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.cardview_layout, parent, false)
+            .inflate(R.layout.recyclerview_alarm_layout, parent, false)
 
         return MyViewHolder(cardView)
     }

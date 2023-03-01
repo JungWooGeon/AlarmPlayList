@@ -23,7 +23,6 @@ class SearchAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter<Sea
 
     var listener: AdapterListener? = null
     var list = ArrayList<Youtube>()
-    var youtubePlayerList = ArrayList<YouTubePlayer>()
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.title)
@@ -33,7 +32,7 @@ class SearchAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter<Sea
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.youtube_search_result_layout, parent, false)
+            .inflate(R.layout.recyclerview_youtube_search_layout, parent, false)
 
         return MyViewHolder(view)
     }

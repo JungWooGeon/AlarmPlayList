@@ -84,8 +84,8 @@ class AddPlaylistActivity : AppCompatActivity() {
                     @SuppressLint("NotifyDataSetChanged")
                     override fun onResponse(call: Call<SearchVideoResult>, response: Response<SearchVideoResult>) {
                         if (response.isSuccessful) {
-                            searchResultRecyclerViewAdapter.list.clear()
-                            searchResultRecyclerViewAdapter.youtubePlayerList.clear()
+                            initRecyclerView()
+
                             for (i in response.body()?.items!!.indices) {
                                 searchResultRecyclerViewAdapter.list.add(Youtube(
                                     response.body()?.items!![i].id.videoId,
