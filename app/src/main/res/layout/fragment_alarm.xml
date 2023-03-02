@@ -42,4 +42,16 @@
         app:layout_constraintTop_toBottomOf="@id/btn_alarm_add"
         app:layout_constraintVertical_weight="2.5" />
 
+    <TextView
+        android:id="@+id/alarm_recyclerview_empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="알람 없음"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/alarm_recyclerview"
+        app:layout_constraintEnd_toEndOf="@id/alarm_recyclerview"
+        app:layout_constraintStart_toStartOf="@id/alarm_recyclerview"
+        app:layout_constraintTop_toTopOf="@id/alarm_recyclerview"
+        app:layout_constraintVertical_bias="0.1" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

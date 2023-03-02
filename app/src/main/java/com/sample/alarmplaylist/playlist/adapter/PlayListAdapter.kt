@@ -1,16 +1,28 @@
 package com.sample.alarmplaylist.playlist.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.playlist.playlist_db.PlayList
 
-class PlayListAdapter : RecyclerView.Adapter<PlayListAdapter.MyViewHolder>() {
+class PlayListAdapter(
+        private val applicationContext: Context,
+        private val menuInflater: MenuInflater
+    ): RecyclerView.Adapter<PlayListAdapter.MyViewHolder>() {
 
+    interface AdapterListener {
+        fun renamePlayList(pos: Int)
+        fun deletePlayList(pos: Int)
+    }
+
+    var listener: AdapterListener? = null
     var list = ArrayList<PlayList>()
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,8 +41,21 @@ class PlayListAdapter : RecyclerView.Adapter<PlayListAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.imgView.setImageResource(R.drawable.playlist1)
         holder.playListTitle.text = list[position].playListTitle
-        holder.btnMore.setOnClickListener {
-
+        holder.btnMore.setOnClickListener { view ->
+            val popupMenu = PopupMenu(applicationContext, view)
+            menuInflater.inflate(R.menu.playlist_popup_menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.rename_menu -> {
+                        listener?.renamePlayList(position)
+                    }
+                    R.id.delete_menu -> {
+                        listener?.deletePlayList(position)
+                    }
+                }
+                false
+            }
+            popupMenu.show()
         }
     }
 

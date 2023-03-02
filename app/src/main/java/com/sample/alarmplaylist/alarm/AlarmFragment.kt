@@ -154,6 +154,12 @@ class AlarmFragment : Fragment() {
             layoutManager = LinearLayoutManager(context, VERTICAL, false)
             adapter = alarmRecyclerViewAdapter
         }
+
+        if (alarmRecyclerViewAdapter.list.size == 0) {
+            binding.alarmRecyclerviewEmptyView.visibility = View.VISIBLE
+        } else {
+            binding.alarmRecyclerviewEmptyView.visibility = View.GONE
+        }
     }
 
     private fun initButton() {

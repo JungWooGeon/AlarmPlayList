@@ -31,10 +31,21 @@
         android:layout_height="160dp"
         android:layout_marginTop="30dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/btn_add_music"
         app:layout_constraintEnd_toEndOf="@id/btn_add_list"
         app:layout_constraintStart_toStartOf="@id/playlist_label"
-        app:layout_constraintTop_toBottomOf="@id/playlist_label"
-        app:layout_constraintBottom_toTopOf="@id/btn_add_music"/>
+        app:layout_constraintTop_toBottomOf="@id/playlist_label" />
+
+    <TextView
+        android:id="@+id/playlist_empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="플레이리스트 없음"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/playlist"
+        app:layout_constraintEnd_toEndOf="@id/playlist"
+        app:layout_constraintStart_toStartOf="@id/playlist"
+        app:layout_constraintTop_toTopOf="@id/playlist" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/btn_add_music"
@@ -52,5 +63,16 @@
         app:layout_constraintEnd_toEndOf="@id/playlist"
         app:layout_constraintStart_toStartOf="@id/playlist"
         app:layout_constraintTop_toBottomOf="@id/btn_add_music" />
+
+    <TextView
+        android:id="@+id/music_list_empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="음악 없음"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/music_list"
+        app:layout_constraintEnd_toEndOf="@id/music_list"
+        app:layout_constraintStart_toStartOf="@id/music_list"
+        app:layout_constraintTop_toTopOf="@id/music_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

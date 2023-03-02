@@ -19,4 +19,14 @@ class PlaylistViewModel : ViewModel() {
         model.addPlayList(context)
         readPlayList(context)
     }
+
+    fun renamePlayList(context: Context, pos: Int, title: String) {
+        model.renamePlayList(context, pos, title)
+    }
+
+    fun deletePlayList(context: Context, pos: Int) {
+        model.deletePlayList(context, pos)
+        readPlayList(context)
+        // @TODO 이 플레이리스트 ID를 가진 모든 음악 데이터도 같이 삭제
+    }
 }
