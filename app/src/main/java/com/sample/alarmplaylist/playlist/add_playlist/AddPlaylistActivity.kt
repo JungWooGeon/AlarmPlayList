@@ -25,7 +25,7 @@ class AddPlaylistActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddPlaylistBinding
     private val searchURL = "https://www.googleapis.com/youtube/v3/"
     private lateinit var searchResultRecyclerViewAdapter: SearchAdapter
-    private val API_KEY = "AIzaSyCCNN5OovIZfuaCU4F0Mg8n_ttXvJ-LNAU"
+    private val API_KEY = ""
     private var playlistID = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
