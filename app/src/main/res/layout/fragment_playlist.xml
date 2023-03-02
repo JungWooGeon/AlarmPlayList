@@ -45,7 +45,8 @@
         app:layout_constraintBottom_toBottomOf="@id/playlist"
         app:layout_constraintEnd_toEndOf="@id/playlist"
         app:layout_constraintStart_toStartOf="@id/playlist"
-        app:layout_constraintTop_toTopOf="@id/playlist" />
+        app:layout_constraintTop_toTopOf="@id/playlist"
+        app:layout_constraintVertical_bias="0.2" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/btn_add_music"
@@ -73,6 +74,7 @@
         app:layout_constraintBottom_toBottomOf="@id/music_list"
         app:layout_constraintEnd_toEndOf="@id/music_list"
         app:layout_constraintStart_toStartOf="@id/music_list"
-        app:layout_constraintTop_toTopOf="@id/music_list" />
+        app:layout_constraintTop_toTopOf="@id/music_list"
+        app:layout_constraintVertical_bias="0.2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,12 +26,15 @@ class AddPlaylistActivity : AppCompatActivity() {
     private val searchURL = "https://www.googleapis.com/youtube/v3/"
     private lateinit var searchResultRecyclerViewAdapter: SearchAdapter
     private val API_KEY = ""
+    private var playlistID = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityAddPlaylistBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        playlistID = intent.getIntExtra("playlistID", -1)
 
         initButton()
         initRecyclerView()
@@ -51,7 +54,8 @@ class AddPlaylistActivity : AppCompatActivity() {
                     db.youtubeDao().insert(Youtube(
                         searchResultRecyclerViewAdapter.list[pos].videoId,
                         searchResultRecyclerViewAdapter.list[pos].title,
-                        searchResultRecyclerViewAdapter.list[pos].thumbnail
+                        searchResultRecyclerViewAdapter.list[pos].thumbnail,
+                        playlistID
                     ))
                 }
 
@@ -90,7 +94,8 @@ class AddPlaylistActivity : AppCompatActivity() {
                                 searchResultRecyclerViewAdapter.list.add(Youtube(
                                     response.body()?.items!![i].id.videoId,
                                     response.body()?.items!![i].snippet.title,
-                                    response.body()?.items!![i].snippet.thumbnails.default.url)
+                                    response.body()?.items!![i].snippet.thumbnails.default.url,
+                                    playlistID)
                                 )
                             }
 

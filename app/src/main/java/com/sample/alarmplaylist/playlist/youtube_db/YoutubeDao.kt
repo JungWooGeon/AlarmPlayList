@@ -15,4 +15,10 @@ interface YoutubeDao {
 
     @Delete
     fun delete(youtube: Youtube)
+
+    @Query("DELETE FROM youtube WHERE playlistId == :id")
+    fun deleteSelected(id: Int)
+
+    @Query("SELECT * FROM youtube WHERE playlistId == :id")
+    fun getSelected(id: Int) : List<Youtube>
 }

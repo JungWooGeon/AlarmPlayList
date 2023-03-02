@@ -3,6 +3,7 @@ package com.sample.alarmplaylist.playlist
 import android.annotation.SuppressLint
 import android.content.*
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,9 @@ import com.sample.alarmplaylist.databinding.FragmentPlaylistBinding
 import com.sample.alarmplaylist.playlist.adapter.MusicListAdapter
 import com.sample.alarmplaylist.playlist.adapter.PlayListAdapter
 import com.sample.alarmplaylist.playlist.add_playlist.AddPlaylistActivity
+import com.sample.alarmplaylist.playlist.dialog.RenamePlayListDialog
 import com.sample.alarmplaylist.playlist.playlist_db.PlayList
+import com.sample.alarmplaylist.playlist.youtube_db.Youtube
 
 class PlaylistFragment : Fragment() {
 
@@ -35,7 +38,8 @@ class PlaylistFragment : Fragment() {
         ct = container
         viewModel = ViewModelProvider(this)[PlaylistViewModel::class.java]
 
-        viewModel.playList.observe(viewLifecycleOwner) { list -> initRecyclerView(list) }
+        viewModel.playList.observe(viewLifecycleOwner) { list -> initPlayList(list) }
+        viewModel.musicList.observe(viewLifecycleOwner) { list -> initMusicList(list) }
 
         _binding = FragmentPlaylistBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -61,13 +65,19 @@ class PlaylistFragment : Fragment() {
         }
 
         binding.btnAddMusic.setOnClickListener {
-            startActivity(Intent(requireActivity(), AddPlaylistActivity::class.java))
+            val intent = Intent(requireActivity(), AddPlaylistActivity::class.java)
+            intent.putExtra("playlistID", viewModel.getSelectPlaylistID())
+            startActivity(intent)
         }
     }
 
-    private fun initRecyclerView(playList: List<PlayList>) {
+    private fun initPlayList(playList: List<PlayList>) {
         playListRecyclerViewAdapter = PlayListAdapter(requireActivity().applicationContext, requireActivity().menuInflater)
         playListRecyclerViewAdapter.listener = (object : PlayListAdapter.AdapterListener {
+            override fun selectImg(pos: Int) {
+                viewModel.selectImg(requireActivity(), pos)
+            }
+
             override fun renamePlayList(pos: Int) {
                 val dialog = RenamePlayListDialog((object: RenamePlayListDialog.DialogListener {
                     @SuppressLint("NotifyDataSetChanged")
@@ -101,19 +111,27 @@ class PlaylistFragment : Fragment() {
         } else {
             binding.playlistEmptyView.visibility = View.GONE
         }
+    }
 
-//
-//        musicListRecyclerViewAdapter = MusicListAdapter()
-//        binding.musicList.apply {
-//            setHasFixedSize(true)
-//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//            adapter = musicListRecyclerViewAdapter
-//        }
+    private fun initMusicList(musicList: List<Youtube>) {
+        musicListRecyclerViewAdapter = MusicListAdapter(requireActivity(), requireActivity().menuInflater)
+        musicListRecyclerViewAdapter.listener = (object : MusicListAdapter.AdapterListener {
+            override fun deleteMusic(pos: Int) {
+                viewModel.deleteMusic(requireActivity(), pos)
+            }
+        })
+        musicListRecyclerViewAdapter.list = musicList as ArrayList<Youtube>
+        binding.musicList.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = musicListRecyclerViewAdapter
+        }
 
-//        if (musicListRecyclerViewAdapter.list.size == 0) {
-//            binding.musicListEmptyView.visibility = View.VISIBLE
-//        } else {
-//            binding.musicListEmptyView.visibility = View.GONE
-//        }
+        Log.d("테스트", musicListRecyclerViewAdapter.list.size.toString())
+        if (musicListRecyclerViewAdapter.list.size == 0) {
+            binding.musicListEmptyView.visibility = View.VISIBLE
+        } else {
+            binding.musicListEmptyView.visibility = View.GONE
+        }
     }
 }

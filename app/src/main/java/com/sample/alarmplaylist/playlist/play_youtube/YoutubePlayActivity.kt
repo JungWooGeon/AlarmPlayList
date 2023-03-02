@@ -7,8 +7,6 @@ import com.sample.alarmplaylist.databinding.ActivityYoutubePlayBinding
 
 class YoutubePlayActivity : YouTubeBaseActivity() {
     private lateinit var binding: ActivityYoutubePlayBinding
-    private val API_KEY = ""
-    private val videoId = "BBdC1rl5sKY"
 
     private lateinit var youTubePlayer: YouTubePlayer
 

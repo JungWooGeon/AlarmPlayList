@@ -1,4 +1,4 @@
-package com.sample.alarmplaylist.playlist
+package com.sample.alarmplaylist.playlist.dialog
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable

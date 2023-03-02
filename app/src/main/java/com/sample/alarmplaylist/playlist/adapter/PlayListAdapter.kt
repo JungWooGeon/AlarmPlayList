@@ -18,6 +18,7 @@ class PlayListAdapter(
     ): RecyclerView.Adapter<PlayListAdapter.MyViewHolder>() {
 
     interface AdapterListener {
+        fun selectImg(pos: Int)
         fun renamePlayList(pos: Int)
         fun deletePlayList(pos: Int)
     }
@@ -39,8 +40,22 @@ class PlayListAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.imgView.setImageResource(R.drawable.playlist1)
+        when(list[position].id!! % 9) {
+            0 -> holder.imgView.setImageResource(R.drawable.playlist1)
+            1 -> holder.imgView.setImageResource(R.drawable.playlist2)
+            2 -> holder.imgView.setImageResource(R.drawable.playlist3)
+            3 -> holder.imgView.setImageResource(R.drawable.playlist4)
+            4 -> holder.imgView.setImageResource(R.drawable.playlist5)
+            5 -> holder.imgView.setImageResource(R.drawable.playlist6)
+            6 -> holder.imgView.setImageResource(R.drawable.playlist7)
+            7 -> holder.imgView.setImageResource(R.drawable.playlist8)
+            8 -> holder.imgView.setImageResource(R.drawable.playlist9)
+        }
+
+        holder.imgView.setOnClickListener { listener?.selectImg(position) }
+
         holder.playListTitle.text = list[position].playListTitle
+
         holder.btnMore.setOnClickListener { view ->
             val popupMenu = PopupMenu(applicationContext, view)
             menuInflater.inflate(R.menu.playlist_popup_menu, popupMenu.menu)
