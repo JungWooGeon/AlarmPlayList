@@ -25,7 +25,7 @@ class AddPlaylistActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddPlaylistBinding
     private val searchURL = "https://www.googleapis.com/youtube/v3/"
     private lateinit var searchResultRecyclerViewAdapter: SearchAdapter
-    private val API_KEY = ""
+    private val API_KEY = "AIzaSyCCNN5OovIZfuaCU4F0Mg8n_ttXvJ-LNAU"
     private var playlistID = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,18 +51,21 @@ class AddPlaylistActivity : AppCompatActivity() {
                 ).build()
 
                 val thread = Thread {
-                    db.youtubeDao().insert(Youtube(
-                        searchResultRecyclerViewAdapter.list[pos].videoId,
-                        searchResultRecyclerViewAdapter.list[pos].title,
-                        searchResultRecyclerViewAdapter.list[pos].thumbnail,
-                        playlistID
-                    ))
+                    db.youtubeDao().insert(
+                        Youtube(
+                            null,
+                            searchResultRecyclerViewAdapter.list[pos].videoId,
+                            searchResultRecyclerViewAdapter.list[pos].title,
+                            searchResultRecyclerViewAdapter.list[pos].thumbnail,
+                            playlistID
+                        )
+                    )
                 }
 
                 thread.start()
                 thread.join()
 
-                Toast.makeText(this@AddPlaylistActivity, "플레이리스트에 추가되었습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AddPlaylistActivity, "플레이리스트에 추가되었습니다", Toast.LENGTH_SHORT).show()
             }
         })
 
@@ -92,6 +95,7 @@ class AddPlaylistActivity : AppCompatActivity() {
 
                             for (i in response.body()?.items!!.indices) {
                                 searchResultRecyclerViewAdapter.list.add(Youtube(
+                                    null,
                                     response.body()?.items!![i].id.videoId,
                                     response.body()?.items!![i].snippet.title,
                                     response.body()?.items!![i].snippet.thumbnails.default.url,

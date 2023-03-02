@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet.Constraint
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.playlist.playlist_db.PlayList
@@ -25,8 +28,11 @@ class PlayListAdapter(
 
     var listener: AdapterListener? = null
     var list = ArrayList<PlayList>()
+    var selectedImgView: AppCompatImageView? = null
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var cardLayout: ConstraintLayout = itemView.findViewById(R.id.card_layout)
+        var cardView: CardView = itemView.findViewById(R.id.cardview)
         var imgView: AppCompatImageView = itemView.findViewById(R.id.img_playlist)
         var playListTitle: TextView = itemView.findViewById(R.id.playlist_title)
         var btnMore: AppCompatImageView = itemView.findViewById(R.id.btn_more)
@@ -40,7 +46,7 @@ class PlayListAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        when(list[position].id!! % 9) {
+        when (list[position].id!! % 9) {
             0 -> holder.imgView.setImageResource(R.drawable.playlist1)
             1 -> holder.imgView.setImageResource(R.drawable.playlist2)
             2 -> holder.imgView.setImageResource(R.drawable.playlist3)
@@ -52,7 +58,18 @@ class PlayListAdapter(
             8 -> holder.imgView.setImageResource(R.drawable.playlist9)
         }
 
-        holder.imgView.setOnClickListener { listener?.selectImg(position) }
+        if (position == 0) {
+            selectedImgView = holder.imgView
+            holder.imgView.alpha = 0.7F
+            holder.cardView
+        }
+
+        holder.cardLayout.setOnClickListener {
+            selectedImgView?.alpha = 1F
+            selectedImgView = holder.imgView
+            holder.imgView.alpha = 0.7F
+            listener?.selectImg(position)
+        }
 
         holder.playListTitle.text = list[position].playListTitle
 

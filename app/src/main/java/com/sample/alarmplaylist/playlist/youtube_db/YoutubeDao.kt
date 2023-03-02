@@ -21,4 +21,7 @@ interface YoutubeDao {
 
     @Query("SELECT * FROM youtube WHERE playlistId == :id")
     fun getSelected(id: Int) : List<Youtube>
+
+    @Query("SELECT * FROM youtube WHERE id == :id")
+    fun exists(id: Int) : List<Youtube>
 }

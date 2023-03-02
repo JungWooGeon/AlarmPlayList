@@ -118,6 +118,7 @@ class PlaylistFragment : Fragment() {
         musicListRecyclerViewAdapter.listener = (object : MusicListAdapter.AdapterListener {
             override fun deleteMusic(pos: Int) {
                 viewModel.deleteMusic(requireActivity(), pos)
+                Toast.makeText(activity, "음악이 삭제되었습니다", Toast.LENGTH_SHORT).show()
             }
         })
         musicListRecyclerViewAdapter.list = musicList as ArrayList<Youtube>

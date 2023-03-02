@@ -16,8 +16,8 @@
             android:id="@+id/card_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="5dp"
-            android:paddingBottom="10dp">
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="16dp">
 
             <TextView
                 android:id="@+id/alarm_time"
@@ -27,8 +27,9 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="오전 07:30"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="22sp"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintBottom_toTopOf="@id/playlist_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,11 +39,11 @@
                 android:layout_height="wrap_content"
                 android:switchMinWidth="50dp"
                 android:switchPadding="20dp"
-                app:layout_constraintBottom_toBottomOf="@id/alarm_time"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintStart_toEndOf="@+id/alarm_time"
-                app:layout_constraintTop_toTopOf="@id/alarm_time" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/playlist_name"
@@ -53,7 +54,6 @@
                 android:text="플레이리스트 1"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/alarm_time"
                 app:layout_constraintStart_toStartOf="@+id/alarm_time"
                 app:layout_constraintTop_toBottomOf="@+id/alarm_time" />
 

@@ -115,6 +115,7 @@ class AlarmFragment : Fragment() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             121 -> {
+                setAlarm(item.groupId, false)
                 viewModel.deleteAlarm(requireActivity().applicationContext, item.groupId)
             }
         }
