@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/view_round_white"
@@ -8,12 +9,25 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/rename_edittext"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/playlist"
         android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <TextView
+        android:id="@+id/playlist_empty_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:hint="제목을 입력해주세요" />
+        android:text="플레이리스트 없음"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/playlist"
+        app:layout_constraintEnd_toEndOf="@id/playlist"
+        app:layout_constraintStart_toStartOf="@id/playlist"
+        app:layout_constraintTop_toTopOf="@id/playlist"
+        app:layout_constraintVertical_bias="0.2" />
 
     <LinearLayout
         android:layout_width="match_parent"

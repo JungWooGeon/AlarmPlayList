@@ -14,7 +14,8 @@ import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.playlist.youtube_db.Youtube
 
 /**
- * https://github.com/PierfrancescoSoffritti/android-youtube-player#autoPlay
+ * https://github.com/PierfrancescoSoffritti/android-youtube-player
+ * https://ppizil.tistory.com/38 -> recyclerview 생명주기
  */
 
 class SearchAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
@@ -53,5 +54,10 @@ class SearchAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter<Sea
 
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    override fun onViewRecycled(holder: MyViewHolder) {
+        holder.youtubePlayerView.release()
+        super.onViewRecycled(holder)
     }
 }

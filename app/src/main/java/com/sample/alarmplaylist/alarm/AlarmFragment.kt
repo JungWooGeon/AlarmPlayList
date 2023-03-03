@@ -26,32 +26,10 @@ import java.util.*
  * https://github.com/arbelkilani/Clock-view
  */
 class AlarmFragment : Fragment() {
-
-    // @TODO
-    // 2. 알람 저장 시 알람 여부 on 으로 설정하고 실제 알람 셋팅하기 o
-    // 3. 알람 울리고 나면 알람 여부 off 로 설정하기 o
-    // 4. 알람 기록할 때, 다른 여부도 저장
-    // 5. 알람음 설정 기능 (알람음 설정 화면 포함)
-    // 6. 진동 기능 구현하기
-    // 7. 이미 실행되고 있는 미디어가 있으면 알람 or 음악 x
-    // 8. youtube 설정 및 playlist 화면 구현
-
-    // 플레이리스트 : 기본 알람음은 기본 플레이리스트로 만들어져 있음
-
     // 알람 참고해보기 : http://batmask.net/index.php/2021/03/12/786/
     //                 https://hanyeop.tistory.com/192
     // 알람 음악 플레이어 :  https://jizard.tistory.com/217
     //                    https://anhana.tistory.com/17
-
-    // 테스트 순서 : 서비스 시작 버튼 (or 알람 설정) -> 노티 -> 노티 클릭 -> 메인 액티비티 실행
-    //             -> 음악 종료
-    //              플레이리스트 -> 플레이리스트 추가('''에서 이름 변경) -> 플레이리스트에서 음악 추가 (검색 액티비티)
-    //             -> 알람 설정 시 저장해놓았던 플레이리스트를 알람음으로 설정
-    //             -> 알람 시 기본 알람음으로 설정되어있으면 foreground service,
-    //                플레이리스트로 설정되어있으면 youtube player activity 실행하여 플레이리스트 차례대로 실행
-    //                (youtube player activity 는 종료 시 음악이 종료됨)
-    
-    // 추가 구현 : 저장되어 있는 음악들 중 선택하여 플레이리스트에 추가 (youtube 와 같이는 불가)
 
     companion object {
         const val ALARM_DB = "alarmDB"
@@ -86,14 +64,6 @@ class AlarmFragment : Fragment() {
         viewModel.alarmList.observe(viewLifecycleOwner) { list -> initRecyclerView(list) }
 
         serviceIntent = Intent(requireActivity(), AlarmService::class.java)
-        if (requireActivity().intent.getBooleanExtra("off", false)) {
-            requireActivity().stopService(serviceIntent)
-            viewModel.setAlarmOff(requireActivity(),
-                requireActivity().intent.getIntExtra("id", -1),
-                requireActivity().intent.getStringExtra("hour").toString(),
-                requireActivity().intent.getStringExtra("minute").toString()
-            )
-        }
 
         initClock()
         initButton()
@@ -149,6 +119,7 @@ class AlarmFragment : Fragment() {
         // Adapter 에 있는 list 에 DB 에서 읽어온 list 반영
         list.forEach { alarmRecyclerViewAdapter.list.add(it) }
         viewModel.getOnOffList().forEach { alarmRecyclerViewAdapter.onOff.add(it) }
+        viewModel.getAlarmInfo()?.forEach { alarmRecyclerViewAdapter.playlistName.add(it.playlistName) }
 
         binding.alarmRecyclerview.apply {
             setHasFixedSize(true)
@@ -173,13 +144,13 @@ class AlarmFragment : Fragment() {
     private fun setAlarm(pos: Int, isChecked: Boolean) {
         // alarm switch 를 누르면 alarm 실행 혹은 취소
         viewModel.setCheckedChange(requireActivity().applicationContext, pos, isChecked)
-
         val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(requireActivity(), AlarmReceiver::class.java).apply {
-            putExtra("id", viewModel.getAlarmInfo()?.get(pos)?.id)
-            putExtra("hour", viewModel.getAlarmInfo()?.get(pos)?.alarmHour)
-            putExtra("minute", viewModel.getAlarmInfo()?.get(pos)?.alarmMinute)
-            putExtra("알람음", RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
+            putExtra("alarmId", viewModel.getAlarmInfo()?.get(pos)?.id)
+            putExtra("alarmHour", viewModel.getAlarmInfo()?.get(pos)?.alarmHour)
+            putExtra("alarmMinute", viewModel.getAlarmInfo()?.get(pos)?.alarmMinute)
+            putExtra("playlistId", viewModel.getAlarmInfo()?.get(pos)?.playlistId)
+            putExtra("playlistTitle", viewModel.getAlarmInfo()?.get(pos)?.playlistName)
         }
         val pendingIntent = PendingIntent.getBroadcast(requireActivity(), viewModel.getAlarmInfo()?.get(pos)?.id!!, intent, ALARM_FLAG)
 

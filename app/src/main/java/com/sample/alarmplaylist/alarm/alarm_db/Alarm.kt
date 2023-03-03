@@ -9,5 +9,7 @@ data class Alarm (
     @PrimaryKey(autoGenerate = true) val id: Int?,
     @ColumnInfo(name = "alarmHour") val alarmHour: String,
     @ColumnInfo(name = "alarmMinute") val alarmMinute: String,
-    @ColumnInfo(name = "onOff") val onOff: Int
+    @ColumnInfo(name = "onOff") val onOff: Int,
+    @ColumnInfo(name = "playlistId") val playlistId: Int,
+    @ColumnInfo(name = "playlistName") val playlistName: String
 )

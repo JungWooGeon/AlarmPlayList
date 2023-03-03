@@ -29,15 +29,34 @@
         app:layout_constraintTop_toBottomOf="@id/time_picker"
         app:layout_constraintVertical_weight="2.5">
 
-        <TextView
-            android:id="@+id/alarm_time"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/alarm_music_layout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="알람음"
-            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@id/first_line"
+            app:layout_constraintEnd_toStartOf="@id/alarm_switch"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/alarm_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="알람음"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/playlist_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="플레이리스트를 설정해주세요"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@+id/alarm_time"
+                app:layout_constraintTop_toBottomOf="@+id/alarm_time" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/alarm_switch"
@@ -46,20 +65,11 @@
             android:checked="true"
             android:switchMinWidth="50dp"
             android:switchPadding="20dp"
-            app:layout_constraintBottom_toBottomOf="@id/alarm_time"
+            app:layout_constraintBottom_toBottomOf="@id/alarm_music_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintStart_toEndOf="@+id/alarm_time"
-            app:layout_constraintTop_toTopOf="@id/alarm_time" />
-
-        <TextView
-            android:id="@+id/playlist_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="플레이리스트 1"
-            android:textSize="15sp"
-            app:layout_constraintStart_toStartOf="@+id/alarm_time"
-            app:layout_constraintTop_toBottomOf="@+id/alarm_time" />
+            app:layout_constraintStart_toEndOf="@+id/alarm_music_layout"
+            app:layout_constraintTop_toTopOf="@id/alarm_music_layout" />
 
         <View
             android:id="@+id/first_line"
@@ -70,7 +80,7 @@
             app:layout_constraintBottom_toTopOf="@id/vibrate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/playlist_name" />
+            app:layout_constraintTop_toBottomOf="@+id/alarm_music_layout" />
 
         <TextView
             android:id="@+id/vibrate"

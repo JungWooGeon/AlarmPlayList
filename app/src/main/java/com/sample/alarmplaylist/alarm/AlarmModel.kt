@@ -68,7 +68,9 @@ class AlarmModel {
                 Alarm(
                     list?.get(pos)?.id, list?.get(pos)?.alarmHour!!,
                     list?.get(pos)?.alarmMinute!!,
-                    if (isChecked) { 1 } else { 0 }
+                    if (isChecked) { 1 } else { 0 },
+                    list?.get(pos)?.playlistId!!,
+                    list?.get(pos)?.playlistName!!
                 )
             )
         }
@@ -77,18 +79,5 @@ class AlarmModel {
         thread.join()
 
         readAlarmData(context)
-    }
-
-    fun setAlarmOff(context: Context, id: Int, hour: String, minute: String) {
-        val db : AlarmDataBase = Room.databaseBuilder(context, AlarmDataBase::class.java,
-            AlarmFragment.ALARM_DB
-        ).build()
-
-        val thread = Thread {
-            db.alarmDao().updateAlarm(Alarm(id, hour, minute, 0))
-        }
-
-        thread.start()
-        thread.join()
     }
 }

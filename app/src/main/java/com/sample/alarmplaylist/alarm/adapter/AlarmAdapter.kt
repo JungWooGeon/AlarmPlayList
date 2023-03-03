@@ -20,6 +20,7 @@ class AlarmAdapter : RecyclerView.Adapter<AlarmAdapter.MyViewHolder>() {
 
     val list = ArrayList<String>()
     val onOff = ArrayList<Boolean>()
+    val playlistName = ArrayList<String>()
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), OnCreateContextMenuListener {
         var cardLayout: ConstraintLayout = itemView.findViewById((R.id.card_layout))
@@ -51,8 +52,8 @@ class AlarmAdapter : RecyclerView.Adapter<AlarmAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.itemSwitchToggle.isChecked = onOff[position]
 
-        holder.itemAlarmTime.setText(list[position])
-        holder.itemAlarmPlaylist.setText("플레이리스트 $position")
+        holder.itemAlarmTime.text = list[position]
+        holder.itemAlarmPlaylist.text = playlistName[position]
 
         var colorId = 0
         when(position % 4) {

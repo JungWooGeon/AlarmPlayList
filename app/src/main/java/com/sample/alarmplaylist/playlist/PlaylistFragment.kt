@@ -128,7 +128,6 @@ class PlaylistFragment : Fragment() {
             adapter = musicListRecyclerViewAdapter
         }
 
-        Log.d("테스트", musicListRecyclerViewAdapter.list.size.toString())
         if (musicListRecyclerViewAdapter.list.size == 0) {
             binding.musicListEmptyView.visibility = View.VISIBLE
         } else {

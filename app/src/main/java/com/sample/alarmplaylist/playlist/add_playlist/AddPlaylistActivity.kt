@@ -24,7 +24,7 @@ class AddPlaylistActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddPlaylistBinding
     private val searchURL = "https://www.googleapis.com/youtube/v3/"
-    private lateinit var searchResultRecyclerViewAdapter: SearchAdapter
+    private var searchResultRecyclerViewAdapter: SearchAdapter? = null
     private val API_KEY = ""
     private var playlistID = -1
 
@@ -40,9 +40,17 @@ class AddPlaylistActivity : AppCompatActivity() {
         initRecyclerView()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onPause() {
+        searchResultRecyclerViewAdapter?.list?.clear()
+        searchResultRecyclerViewAdapter?.notifyDataSetChanged()
+        searchResultRecyclerViewAdapter = null
+        super.onPause()
+    }
+
     private fun initRecyclerView() {
         searchResultRecyclerViewAdapter = SearchAdapter(lifecycle)
-        searchResultRecyclerViewAdapter.listener = (object : SearchAdapter.AdapterListener {
+        searchResultRecyclerViewAdapter?.listener = (object : SearchAdapter.AdapterListener {
             override fun onAddButtonClick(pos: Int) {
                 val db : YoutubeDataBase = Room.databaseBuilder(
                     applicationContext,
@@ -54,9 +62,9 @@ class AddPlaylistActivity : AppCompatActivity() {
                     db.youtubeDao().insert(
                         Youtube(
                             null,
-                            searchResultRecyclerViewAdapter.list[pos].videoId,
-                            searchResultRecyclerViewAdapter.list[pos].title,
-                            searchResultRecyclerViewAdapter.list[pos].thumbnail,
+                            searchResultRecyclerViewAdapter!!.list[pos].videoId,
+                            searchResultRecyclerViewAdapter!!.list[pos].title,
+                            searchResultRecyclerViewAdapter!!.list[pos].thumbnail,
                             playlistID
                         )
                     )
@@ -94,7 +102,7 @@ class AddPlaylistActivity : AppCompatActivity() {
                             initRecyclerView()
 
                             for (i in response.body()?.items!!.indices) {
-                                searchResultRecyclerViewAdapter.list.add(Youtube(
+                                searchResultRecyclerViewAdapter!!.list.add(Youtube(
                                     null,
                                     response.body()?.items!![i].id.videoId,
                                     response.body()?.items!![i].snippet.title,
@@ -103,9 +111,8 @@ class AddPlaylistActivity : AppCompatActivity() {
                                 )
                             }
 
-                            searchResultRecyclerViewAdapter.notifyDataSetChanged()
+                            searchResultRecyclerViewAdapter!!.notifyDataSetChanged()
 
-                            Log.d("테스트", searchResultRecyclerViewAdapter.list[0].title)
                         } else {
                             Log.d("테스트", "실패")
                         }
