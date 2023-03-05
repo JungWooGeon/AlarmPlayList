@@ -6,6 +6,16 @@ import androidx.lifecycle.ViewModel
 import com.sample.alarmplaylist.playlist.playlist_db.PlayList
 import com.sample.alarmplaylist.playlist.youtube_db.Youtube
 
+/**
+ * PlaylistFragment ViewModel
+ * 1. readPlayList : DB 에서 플레이리스트 목록 조회 요청
+ * 2. addPlayList : DB 에 플레이리스트 목록 추가 요청
+ * 3. renamePlayList : DB 에 플레이리스트 이름 변경 요청
+ * 4. deletePlayList : DB 에 플레이리스트 삭제 요청
+ * 5. selectImg : 선택한 position 에 있는 플레이리스트에 대한 음악 목록 요청
+ * 6. getSelectPlaylistID : 현재 선택되어 있는 플레이리스트 ID 조회
+ * 7. deleteMusic : DB 에 음악 삭제 요청
+ */
 class PlaylistViewModel : ViewModel() {
 
     private val model: PlaylistModel = PlaylistModel()

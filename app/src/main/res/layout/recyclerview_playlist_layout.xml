@@ -37,7 +37,7 @@
         android:layout_marginStart="10dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="플레이리스트"
+        android:text="@string/playlist"
         android:textAlignment="center"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"

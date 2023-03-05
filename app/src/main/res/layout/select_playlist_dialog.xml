@@ -13,15 +13,15 @@
         android:id="@+id/playlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <TextView
         android:id="@+id/playlist_empty_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="플레이리스트 없음"
+        android:text="@string/none_playlist"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/playlist"
         app:layout_constraintEnd_toEndOf="@id/playlist"
@@ -41,7 +41,7 @@
             android:layout_height="40dp"
             android:layout_marginEnd="7dp"
             android:layout_weight="1"
-            android:text="취소"
+            android:text="@string/cancel"
             android:textSize="14sp" />
 
         <androidx.appcompat.widget.AppCompatButton
@@ -49,7 +49,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:text="확인"
+            android:text="@string/confirm"
             android:textSize="14sp" />
 
     </LinearLayout>

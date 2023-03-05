@@ -12,7 +12,7 @@ import com.sample.alarmplaylist.Constant
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.databinding.ActivityAddAlarmBinding
 import com.sample.alarmplaylist.alarm.dialog.SelectPlaylistDialog
-import com.sample.alarmplaylist.alarm.receiver.AlarmReceiver
+import com.sample.alarmplaylist.alarm.notification.AlarmReceiver
 import java.util.*
 
 /**

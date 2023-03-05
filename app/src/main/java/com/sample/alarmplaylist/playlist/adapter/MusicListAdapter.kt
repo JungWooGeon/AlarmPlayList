@@ -13,11 +13,15 @@ import com.bumptech.glide.Glide
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.playlist.youtube_db.Youtube
 
+/**
+ * PlaylistFragment 음악리스트 recycler view adapter
+ */
 class MusicListAdapter(
     private val context: Context,
     private val menuInflater: MenuInflater
     ) : RecyclerView.Adapter<MusicListAdapter.MyViewHolder>() {
 
+    // PlaylistFragment 와 통신하기 위한 listener
     interface AdapterListener {
         fun deleteMusic(pos: Int)
     }
@@ -39,18 +43,18 @@ class MusicListAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        // Glide 를 사용하여 썸네일 이미지를 가져와서 반영
         Glide.with(context).load(list[position].thumbnail).into(holder.imgMusic)
 
         holder.musicTitle.text = list[position].title
 
+        // 더보기 클릭하여 나온 menu 에서 삭제 선택 시 listener 를 통해 삭제 기능 수행
         holder.btnMore.setOnClickListener { view ->
             val popupMenu = PopupMenu(context, view)
             menuInflater.inflate(R.menu.musiclist_popup_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.delete_menu -> {
-                        listener?.deleteMusic(position)
-                    }
+                    R.id.delete_menu -> { listener?.deleteMusic(position) }
                 }
                 false
             }

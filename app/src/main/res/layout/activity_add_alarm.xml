@@ -37,13 +37,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-<!--            app:layout_constraintBottom_toTopOf="@id/first_line"-->
+            <!--            app:layout_constraintBottom_toTopOf="@id/first_line"-->
 
             <TextView
                 android:id="@+id/alarm_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="알람음"
+                android:text="@string/alarm_music"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -52,7 +52,7 @@
                 android:id="@+id/playlist_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="플레이리스트를 설정해주세요"
+                android:text="@string/plz_set_playlist"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="@+id/alarm_time"
                 app:layout_constraintTop_toBottomOf="@+id/alarm_time" />
@@ -64,6 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
+            android:clickable="false"
             android:switchMinWidth="50dp"
             android:switchPadding="20dp"
             app:layout_constraintBottom_toBottomOf="@id/alarm_music_layout"
@@ -72,73 +73,73 @@
             app:layout_constraintStart_toEndOf="@+id/alarm_music_layout"
             app:layout_constraintTop_toTopOf="@id/alarm_music_layout" />
 
-<!--        <View-->
-<!--            android:id="@+id/first_line"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="1dp"-->
-<!--            android:layout_marginVertical="10dp"-->
-<!--            android:background="@color/line"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/vibrate"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/alarm_music_layout" />-->
+        <!--        <View-->
+        <!--            android:id="@+id/first_line"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="1dp"-->
+        <!--            android:layout_marginVertical="10dp"-->
+        <!--            android:background="@color/line"-->
+        <!--            app:layout_constraintBottom_toTopOf="@id/vibrate"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/alarm_music_layout" />-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/vibrate"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="셔플"-->
-<!--            android:textSize="20sp"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/second_line"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/first_line" />-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/vibrate"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="셔플"-->
+        <!--            android:textSize="20sp"-->
+        <!--            app:layout_constraintBottom_toTopOf="@id/second_line"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/first_line" />-->
 
-<!--        <androidx.appcompat.widget.SwitchCompat-->
-<!--            android:id="@+id/vibrate_switch"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:checked="true"-->
-<!--            android:switchMinWidth="50dp"-->
-<!--            android:switchPadding="20dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/vibrate"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="1"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/vibrate"-->
-<!--            app:layout_constraintTop_toTopOf="@id/vibrate" />-->
+        <!--        <androidx.appcompat.widget.SwitchCompat-->
+        <!--            android:id="@+id/vibrate_switch"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:checked="true"-->
+        <!--            android:switchMinWidth="50dp"-->
+        <!--            android:switchPadding="20dp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/vibrate"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="1"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/vibrate"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/vibrate" />-->
 
-<!--        <View-->
-<!--            android:id="@+id/second_line"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="1dp"-->
-<!--            android:layout_marginVertical="10dp"-->
-<!--            android:background="@color/line"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/repeat"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/vibrate" />-->
+        <!--        <View-->
+        <!--            android:id="@+id/second_line"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="1dp"-->
+        <!--            android:layout_marginVertical="10dp"-->
+        <!--            android:background="@color/line"-->
+        <!--            app:layout_constraintBottom_toTopOf="@id/repeat"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/vibrate" />-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/repeat"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="반복 재생"-->
-<!--            android:textSize="20sp"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/second_line" />-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/repeat"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="반복 재생"-->
+        <!--            android:textSize="20sp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/second_line" />-->
 
-<!--        <androidx.appcompat.widget.SwitchCompat-->
-<!--            android:id="@+id/repeat_switch"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:checked="true"-->
-<!--            android:switchMinWidth="50dp"-->
-<!--            android:switchPadding="20dp"-->
-<!--            app:layout_constraintBottom_toBottomOf="@id/repeat"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="1"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/repeat"-->
-<!--            app:layout_constraintTop_toTopOf="@id/repeat" />-->
+        <!--        <androidx.appcompat.widget.SwitchCompat-->
+        <!--            android:id="@+id/repeat_switch"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:checked="true"-->
+        <!--            android:switchMinWidth="50dp"-->
+        <!--            android:switchPadding="20dp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@id/repeat"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="1"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/repeat"-->
+        <!--            app:layout_constraintTop_toTopOf="@id/repeat" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -156,7 +157,7 @@
             android:id="@+id/btn_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="취소"
+            android:text="@string/cancel"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_save"
             app:layout_constraintStart_toStartOf="parent"
@@ -166,7 +167,7 @@
             android:id="@+id/btn_save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="저장"
+            android:text="@string/save"
             app:layout_constraintBottom_toBottomOf="@id/btn_cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_cancel" />

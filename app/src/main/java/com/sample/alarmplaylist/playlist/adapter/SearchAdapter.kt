@@ -10,16 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import com.sample.alarmplaylist.Constant
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.playlist.youtube_db.Youtube
 
 /**
- * https://github.com/PierfrancescoSoffritti/android-youtube-player
- * https://ppizil.tistory.com/38 -> recyclerview 생명주기
+ * AddPlaylistActivity 에서 사용하는 검색 결과 recyclerview adapter
  */
-
 class SearchAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
 
+    // AddPlayListActivity 와 통신하기 위한 listener
     interface AdapterListener { fun onAddButtonClick(pos: Int) }
 
     var listener: AdapterListener? = null
@@ -39,12 +39,12 @@ class SearchAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter<Sea
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        // youtubePlayerView 설정, (cueVideo : 썸네일 o 자동재생 x, loadVideo : 썸네일 x 자동재생 o)
         lifecycle.addObserver(holder.youtubePlayerView)
-
         holder.youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 val videoId = list[holder.bindingAdapterPosition].videoId
-                youTubePlayer.cueVideo(videoId, 0F)
+                youTubePlayer.cueVideo(videoId, Constant.YOUTUBE_PLAYER_VIEW_START_SECONDS)
             }
         })
 

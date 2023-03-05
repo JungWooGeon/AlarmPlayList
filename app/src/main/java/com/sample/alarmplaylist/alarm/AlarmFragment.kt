@@ -14,8 +14,7 @@ import com.sample.alarmplaylist.Constant
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.alarm.adapter.AlarmAdapter
 import com.sample.alarmplaylist.alarm.add_alarm.AddAlarmActivity
-import com.sample.alarmplaylist.alarm.receiver.AlarmReceiver
-import com.sample.alarmplaylist.alarm.receiver.AlarmService
+import com.sample.alarmplaylist.alarm.notification.AlarmReceiver
 import com.sample.alarmplaylist.databinding.FragmentAlarmBinding
 import java.util.*
 

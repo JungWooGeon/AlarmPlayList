@@ -5,6 +5,7 @@
     <string name="title_notifications">Notifications</string>
 
     <string name="select_playlist_dialog">SelectPlaylistDialog</string>
+    <string name="rename_playlist_dialog">RenamePlayListDialog</string>
 
     <string name="alarm">알람</string>
     <string name="playlist">플레이리스트</string>
@@ -14,9 +15,28 @@
     <string name="colon">:</string>
     <string name="twelve">12</string>
     <string name="zero">0</string>
+    <string name="cancel">취소</string>
+    <string name="save">저장</string>
+    <string name="confirm">확인</string>
+    <string name="alarm_music">알람음</string>
+    <string name="youtube_play_list">재생 목록</string>
+    <string name="none_alarm">알람 없음</string>
+    <string name="none_playlist">플레이리스트 없음</string>
+    <string name="none_music">음악 없음</string>
+    <string name="rename">이름 변경</string>
 
     <string name="switch_alarm_activity">선택 시 알람 음악화면으로 전환됩니다</string>
     <string name="complete_add_alarm">알람이 설정되었습니다</string>
     <string name="complete_set_playlist">플레이리스트가 설정되었습니다</string>
     <string name="reset_playlist_setting">플레이리스트 설정을 다시 해주세요</string>
+    <string name="delete_playlist">플레이리스트가 삭제되었습니다</string>
+    <string name="delete_music">음악이 삭제되었습니다</string>
+    <string name="title">"제목이 </string>
+    <string name="update">(으)로 변경되었습니다"</string>
+    <string name="try_to_main_activity">"메인 화면에서 삭제를 시도해주세요"</string>
+    <string name="finish_alarm">알람이 종료되었습니다</string>
+    <string name="add_playlist">플레이리스트에 추가되었습니다</string>
+    <string name="plz_set_playlist">플레이리스트를 설정해주세요</string>
+    <string name="plz_input_search_word">검색어를 입력하시오</string>
+    <string name="plz_input_title">제목을 입력해주세요</string>
 </resources>

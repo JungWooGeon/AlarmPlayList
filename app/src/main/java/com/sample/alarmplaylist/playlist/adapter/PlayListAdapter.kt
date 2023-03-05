@@ -10,16 +10,25 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet.Constraint
 import androidx.recyclerview.widget.RecyclerView
+import com.sample.alarmplaylist.Constant
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.playlist.playlist_db.PlayList
 
+/**
+ * PlaylistFragment 플레이리스트 recycler view adapter
+ */
 class PlayListAdapter(
         private val applicationContext: Context,
         private val menuInflater: MenuInflater
     ): RecyclerView.Adapter<PlayListAdapter.MyViewHolder>() {
 
+    companion object {
+        private const val DEFAULT_IMAGE_VIEW_ALPHA = 1F
+        private const val SELECTED_IMAGE_VIEW_ALPHA = 0.5F
+    }
+
+    // PlaylistFragment 와 통신하기 위한 listener
     interface AdapterListener {
         fun selectImg(pos: Int)
         fun renamePlayList(pos: Int)
@@ -46,7 +55,8 @@ class PlayListAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        when (list[position].id!! % 9) {
+        // 플레이리스트 이미지 설정
+        when (list[position].id!! % Constant.PLAYLIST_IMAGE_COUNT) {
             0 -> holder.imgView.setImageResource(R.drawable.playlist1)
             1 -> holder.imgView.setImageResource(R.drawable.playlist2)
             2 -> holder.imgView.setImageResource(R.drawable.playlist3)
@@ -58,32 +68,31 @@ class PlayListAdapter(
             8 -> holder.imgView.setImageResource(R.drawable.playlist9)
         }
 
-        if (position == 0) {
+        // 첫 번째 플레이리스트를 선택된 것으로 초기화
+        if (position == Constant.DEFAULT_SELECTED_POSITION) {
             selectedImgView = holder.imgView
-            holder.imgView.alpha = 0.7F
+            holder.imgView.alpha = SELECTED_IMAGE_VIEW_ALPHA
             holder.cardView
         }
 
+        // 플레이리스트 layout 클릭 시 선택 이벤트
         holder.cardLayout.setOnClickListener {
-            selectedImgView?.alpha = 1F
+            selectedImgView?.alpha = DEFAULT_IMAGE_VIEW_ALPHA
             selectedImgView = holder.imgView
-            holder.imgView.alpha = 0.7F
+            holder.imgView.alpha = SELECTED_IMAGE_VIEW_ALPHA
             listener?.selectImg(position)
         }
 
         holder.playListTitle.text = list[position].playListTitle
 
+        // 더보기 클릭하여 나온 menu 에서 item 선택 시 listener 를 통해 기능 수행
         holder.btnMore.setOnClickListener { view ->
             val popupMenu = PopupMenu(applicationContext, view)
             menuInflater.inflate(R.menu.playlist_popup_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.rename_menu -> {
-                        listener?.renamePlayList(position)
-                    }
-                    R.id.delete_menu -> {
-                        listener?.deletePlayList(position)
-                    }
+                    R.id.rename_menu -> { listener?.renamePlayList(position) }
+                    R.id.delete_menu -> { listener?.deletePlayList(position) }
                 }
                 false
             }

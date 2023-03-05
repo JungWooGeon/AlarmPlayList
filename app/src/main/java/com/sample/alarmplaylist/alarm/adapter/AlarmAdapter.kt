@@ -18,6 +18,7 @@ class AlarmAdapter : RecyclerView.Adapter<AlarmAdapter.MyViewHolder>() {
         private const val CONTEXT_MENU_ITEM_ID = 121
         private const val CONTEXT_MENU_ORDER = 0
         private const val CONTEXT_MENU_TITLE = "삭제"
+        private const val ALARM_BACKGROUND_COLOR_COUNT = 4
     }
 
     // AlarmFragment 와 통신할 Listener
@@ -61,7 +62,7 @@ class AlarmAdapter : RecyclerView.Adapter<AlarmAdapter.MyViewHolder>() {
 
         // position 에 따라 배경색을 다르게 주기
         var colorId = 0
-        when(position % 4) {
+        when(position % ALARM_BACKGROUND_COLOR_COUNT) {
             0 -> colorId = R.color.card_1
             1 -> colorId = R.color.card_2
             2 -> colorId = R.color.card_3

@@ -1,4 +1,4 @@
-package com.sample.alarmplaylist.alarm.receiver
+package com.sample.alarmplaylist.alarm.notification
 
 import android.content.BroadcastReceiver
 import android.content.Context

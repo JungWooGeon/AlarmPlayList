@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.sample.alarmplaylist.Constant
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.playlist.playlist_db.PlayList
 
@@ -16,14 +17,9 @@ import com.sample.alarmplaylist.playlist.playlist_db.PlayList
  */
 class SelectPlaylistAdapter : RecyclerView.Adapter<SelectPlaylistAdapter.MyViewHolder>() {
 
-    companion object {
-        private const val DEFAULT_SELECTED_POSITION = 0
-        private const val PLAYLIST_IMAGE_COUNT = 9
-    }
-
     var list = ArrayList<PlayList>()
 
-    var selectedPosition = DEFAULT_SELECTED_POSITION
+    var selectedPosition = Constant.DEFAULT_SELECTED_POSITION
     private var selectedRadio: RadioButton? = null
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -42,7 +38,7 @@ class SelectPlaylistAdapter : RecyclerView.Adapter<SelectPlaylistAdapter.MyViewH
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // 플레이리스트 id 에 따라 image 를 다르게 보여줌
-        when (list[position].id!! % PLAYLIST_IMAGE_COUNT) {
+        when (list[position].id!! % Constant.PLAYLIST_IMAGE_COUNT) {
             0 -> holder.imgPlaylist.setImageResource(R.drawable.playlist1)
             1 -> holder.imgPlaylist.setImageResource(R.drawable.playlist2)
             2 -> holder.imgPlaylist.setImageResource(R.drawable.playlist3)
@@ -55,7 +51,7 @@ class SelectPlaylistAdapter : RecyclerView.Adapter<SelectPlaylistAdapter.MyViewH
         }
 
         // 첫 번째 있는 플레이리스트는 체크 표시로 설정 (radio button 기본 설정)
-        if (position == DEFAULT_SELECTED_POSITION) {
+        if (position == Constant.DEFAULT_SELECTED_POSITION) {
             holder.btnRadio.isChecked = true
             selectedRadio = holder.btnRadio
         }

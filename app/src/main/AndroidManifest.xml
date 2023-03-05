@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sample.alarmplaylist">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
     <application
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_foreground"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AlarmPlayList">
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,10 +30,10 @@
             android:exported="true" />
 
         <receiver
-            android:name=".alarm.receiver.AlarmReceiver"
+            android:name=".alarm.notification.AlarmReceiver"
             android:exported="false" />
 
-        <service android:name=".alarm.receiver.AlarmService" />
+        <service android:name=".alarm.notification.AlarmService" />
 
         <activity
             android:name=".playlist.play_youtube.YoutubePlayActivity"

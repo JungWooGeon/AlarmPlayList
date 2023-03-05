@@ -1,4 +1,4 @@
-package com.sample.alarmplaylist.alarm.receiver
+package com.sample.alarmplaylist.alarm.notification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -16,6 +16,9 @@ import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.alarm.alarm_db.Alarm
 import com.sample.alarmplaylist.alarm.alarm_db.AlarmDataBase
 import com.sample.alarmplaylist.playlist.play_youtube.YoutubePlayActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * 정시에 시작되는 AlarmReceiver 에서 실행이 되어 알람 notification 을 full screen 으로 보낸다.
@@ -82,11 +85,12 @@ class AlarmService : Service() {
 
     // DB 알람 off 로 설정
     private fun setOffAlarm(intent: Intent) {
-        val db : AlarmDataBase = Room.databaseBuilder(applicationContext, AlarmDataBase::class.java,
-            Constant.ALARM_DB
-        ).build()
-
-        val thread = Thread {
+        // 백그라운드에서 실행될 사용자 정의 Scope
+        CoroutineScope(Dispatchers.IO).launch {
+            // 백그라운드 작업
+            val db : AlarmDataBase = Room.databaseBuilder(applicationContext, AlarmDataBase::class.java,
+                Constant.ALARM_DB
+            ).build()
             db.alarmDao().updateAlarm(
                 Alarm(
                     intent.getIntExtra(Constant.ALARM_ID, INTENT_DEFAULT_VALUE),
@@ -98,8 +102,5 @@ class AlarmService : Service() {
                 )
             )
         }
-
-        thread.start()
-        thread.join()
     }
 }
