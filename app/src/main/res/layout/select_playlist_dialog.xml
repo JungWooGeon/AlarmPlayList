@@ -12,7 +12,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/playlist"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_gravity="center_horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
