@@ -8,13 +8,13 @@
     <fragment
         android:id="@+id/navigation_alarm"
         android:name="com.sample.alarmplaylist.alarm.AlarmFragment"
-        android:label="@string/kr_alarm"
+        android:label="@string/alarm"
         tools:layout="@layout/fragment_alarm" />
 
     <fragment
         android:id="@+id/navigation_playlist"
         android:name="com.sample.alarmplaylist.playlist.PlaylistFragment"
-        android:label="@string/kr_playlist"
+        android:label="@string/playlist"
         tools:layout="@layout/fragment_playlist" />
 
 </navigation>

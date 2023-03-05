@@ -5,6 +5,9 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdk 32
 
@@ -16,6 +19,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "YOUTUBE_API_KEY", properties['youtube_api_key']
+        buildConfigField "String", "YOUTUBE_API_SEARCH", properties['youtube_api_search']
     }
 
     buildTypes {
@@ -53,7 +59,6 @@ dependencies {
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
 
-    implementation 'com.github.arbelkilani:Clock-view:2.1.0'
     implementation "androidx.recyclerview:recyclerview-selection:1.2.0-alpha01"
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "androidx.cardview:cardview:1.0.0"
@@ -67,5 +72,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
+    implementation 'com.github.arbelkilani:Clock-view:2.1.0'
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.1.0'
 }

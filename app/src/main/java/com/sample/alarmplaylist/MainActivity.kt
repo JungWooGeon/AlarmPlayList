@@ -8,6 +8,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.sample.alarmplaylist.databinding.ActivityMainBinding
 
+/**
+ * 메인 화면을 구성하고, bottom navigation bar 에서 알람 fragment 와 플레이리스트 fragment 로 전환한다.
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -21,9 +24,8 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
+
+        AppBarConfiguration(
             setOf(
                 R.id.navigation_alarm, R.id.navigation_playlist
             )

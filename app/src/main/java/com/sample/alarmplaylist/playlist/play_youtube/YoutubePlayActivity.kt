@@ -112,9 +112,10 @@ class YoutubePlayActivity : AppCompatActivity() {
         binding.skipPrevious.setOnClickListener {
             binding.youtubePlayerView.getYouTubePlayerWhenReady(object: YouTubePlayerCallback {
                 override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                    if (currentPlaylistPosition > 0)
+                    if (currentPlaylistPosition > 1) {
                         currentPlaylistPosition -= 2
                         youTubePlayer.loadVideo(musicListRecyclerViewAdapter.list[currentPlaylistPosition++].videoId, 0F)
+                    }
                 }
             })
         }

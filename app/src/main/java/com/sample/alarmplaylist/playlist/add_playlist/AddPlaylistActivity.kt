@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
+import com.sample.alarmplaylist.BuildConfig
 import com.sample.alarmplaylist.databinding.ActivityAddPlaylistBinding
 import com.sample.alarmplaylist.playlist.adapter.SearchAdapter
 import com.sample.alarmplaylist.playlist.api_retrofit.SearchVideoInterface
@@ -23,9 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class AddPlaylistActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddPlaylistBinding
-    private val searchURL = "https://www.googleapis.com/youtube/v3/"
     private var searchResultRecyclerViewAdapter: SearchAdapter? = null
-    private val API_KEY = ""
     private var playlistID = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,12 +87,12 @@ class AddPlaylistActivity : AppCompatActivity() {
         binding.search.isSubmitButtonEnabled = true
         binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                val retrofit = Retrofit.Builder().baseUrl(searchURL)
+                val retrofit = Retrofit.Builder().baseUrl(BuildConfig.YOUTUBE_API_SEARCH)
                     .addConverterFactory(GsonConverterFactory.create()).build()
                 val service = retrofit.create(SearchVideoInterface::class.java)
 
                 service.getSearchResult(
-                    "snippet", "video", API_KEY,
+                    "snippet", "video", BuildConfig.YOUTUBE_API_KEY,
                     query.toString()
                 ).enqueue(object : Callback<SearchVideoResult> {
                     @SuppressLint("NotifyDataSetChanged")

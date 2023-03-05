@@ -11,14 +11,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.playlist.playlist_db.PlayList
 
-class SelectPlaylistAdapter (
+/**
+ * SelectPlaylistDialog 에 플레이리스트 정보들을 보여주는 RecyclerView 에서 사용하는 Adapter
+ */
+class SelectPlaylistAdapter : RecyclerView.Adapter<SelectPlaylistAdapter.MyViewHolder>() {
 
-) : RecyclerView.Adapter<SelectPlaylistAdapter.MyViewHolder>() {
+    companion object {
+        private const val DEFAULT_SELECTED_POSITION = 0
+        private const val PLAYLIST_IMAGE_COUNT = 9
+    }
 
     var list = ArrayList<PlayList>()
 
-    var selectedPosition = 0
-    var selectedRadio: RadioButton? = null
+    var selectedPosition = DEFAULT_SELECTED_POSITION
+    private var selectedRadio: RadioButton? = null
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var cardLayout: ConstraintLayout = itemView.findViewById(R.id.card_layout)
@@ -35,7 +41,8 @@ class SelectPlaylistAdapter (
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        when (list[position].id!! % 9) {
+        // 플레이리스트 id 에 따라 image 를 다르게 보여줌
+        when (list[position].id!! % PLAYLIST_IMAGE_COUNT) {
             0 -> holder.imgPlaylist.setImageResource(R.drawable.playlist1)
             1 -> holder.imgPlaylist.setImageResource(R.drawable.playlist2)
             2 -> holder.imgPlaylist.setImageResource(R.drawable.playlist3)
@@ -47,11 +54,13 @@ class SelectPlaylistAdapter (
             8 -> holder.imgPlaylist.setImageResource(R.drawable.playlist9)
         }
 
-        if (position == 0) {
+        // 첫 번째 있는 플레이리스트는 체크 표시로 설정 (radio button 기본 설정)
+        if (position == DEFAULT_SELECTED_POSITION) {
             holder.btnRadio.isChecked = true
             selectedRadio = holder.btnRadio
         }
 
+        // 플레이리스트 클릭 시, 선택된 플레이리스트를 바꾸어 저장하고 radio button 설정
         holder.cardLayout.setOnClickListener {
             selectedRadio?.isChecked = false
             selectedPosition = position
