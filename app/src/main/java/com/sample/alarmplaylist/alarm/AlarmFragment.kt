@@ -70,8 +70,9 @@ class AlarmFragment : Fragment() {
         val alarmRecyclerViewAdapter = AlarmAdapter()
 
         alarmRecyclerViewAdapter.listener = (object : AlarmAdapter.AdapterListener {
+            // recyclerview 에서 Item 클릭 시 알람 정보를 변경할 수 있는 화면 전환
             override fun onItemClick(v: View, pos: Int) {
-                // recyclerview 에서 Item 클릭 시 알람 정보를 변경할 수 있는 화면으로 전환
+                setAlarm(pos, false)
                 startActivity(Intent(activity, AddAlarmActivity::class.java).apply {
                     putExtra(Constant.ALARM_HOUR, viewModel.getAlarmInfo()?.get(pos)?.alarmHour)
                     putExtra(Constant.ALARM_MINUTE, viewModel.getAlarmInfo()?.get(pos)?.alarmMinute)
