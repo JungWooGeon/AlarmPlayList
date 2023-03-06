@@ -1,7 +1,6 @@
 package com.sample.alarmplaylist.playlist.add_playlist
 
 import android.content.Context
-import android.util.Log
 import androidx.room.Room
 import com.sample.alarmplaylist.BuildConfig
 import com.sample.alarmplaylist.Constant
@@ -51,15 +50,15 @@ class AddPlaylistModel {
             ).execute().body()
 
             youtubeList.clear()
-            Log.d("테스트", response?.items?.size.toString())
-//            for (i in response?.items!!.indices) {
-//                youtubeList.add(Youtube(null,
-//                    response.items[i].id.videoId,
-//                    response.items[i].snippet.title,
-//                    response.items[i].snippet.thumbnails.default.url,
-//                    playlistID
-//                ))
-//            }
+
+            for (i in response?.items!!.indices) {
+                youtubeList.add(Youtube(null,
+                    response.items[i].id.videoId,
+                    response.items[i].snippet.title,
+                    response.items[i].snippet.thumbnails.default.url,
+                    playlistID
+                ))
+            }
         }
 
         thread.start()
