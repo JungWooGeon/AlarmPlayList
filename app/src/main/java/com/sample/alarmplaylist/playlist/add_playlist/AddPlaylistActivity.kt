@@ -80,7 +80,7 @@ class AddPlaylistActivity : AppCompatActivity() {
         binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             // 검색을 실행했을 경우, retrofit 을 사용하여 데이터 검색 후 추출하여 저장
             override fun onQueryTextSubmit(query: String?): Boolean {
-                viewModel.searchYoutube(query.toString(), playlistID)
+                viewModel.searchYoutube(query.toString(), playlistID, getString(R.string.youtube_api_search))
                 return false
             }
 

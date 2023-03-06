@@ -55,4 +55,8 @@ class PlaylistViewModel : ViewModel() {
         model.deleteMusic(context, pos)
         musicList.value = model.musicList
     }
+
+    fun playlistIsEmpty(): Boolean {
+        return model.playList.isEmpty()
+    }
 }

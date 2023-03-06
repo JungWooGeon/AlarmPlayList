@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AlarmPlayList">
         <activity
-            android:name=".MainActivity"
+            android:name="com.sample.alarmplaylist.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,22 +23,23 @@
         </activity>
 
         <activity
-            android:name=".alarm.add_alarm.AddAlarmActivity"
+            android:name="com.sample.alarmplaylist.alarm.add_alarm.AddAlarmActivity"
             android:exported="true" />
 
         <activity
-            android:name=".playlist.add_playlist.AddPlaylistActivity"
+            android:name="com.sample.alarmplaylist.playlist.add_playlist.AddPlaylistActivity"
             android:exported="true" />
 
         <receiver
-            android:name=".alarm.notification.AlarmReceiver"
+            android:name="com.sample.alarmplaylist.alarm.notification.AlarmReceiver"
             android:exported="false" />
 
-        <service android:name=".alarm.notification.AlarmService" />
+        <service android:name="com.sample.alarmplaylist.alarm.notification.AlarmService" />
 
         <activity
-            android:name=".playlist.play_youtube.YoutubePlayActivity"
+            android:name="com.sample.alarmplaylist.playlist.play_youtube.YoutubePlayActivity"
             android:exported="true" />
+
     </application>
 
     <queries>

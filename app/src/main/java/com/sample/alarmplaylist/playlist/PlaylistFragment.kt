@@ -63,9 +63,13 @@ class PlaylistFragment : Fragment() {
 
         // 음악 추가 버튼을 눌렀을 경우, AddPlaylistActivity 를 띄운다.
         binding.btnAddMusic.setOnClickListener {
-            val intent = Intent(requireActivity(), AddPlaylistActivity::class.java)
-            intent.putExtra(Constant.PLAYLIST_ID, viewModel.getSelectPlaylistID())
-            startActivity(intent)
+            if (viewModel.playlistIsEmpty()) {
+                Toast.makeText(activity, getString(R.string.plz_add_first_playlist), Toast.LENGTH_SHORT).show()
+            } else {
+                val intent = Intent(requireActivity(), AddPlaylistActivity::class.java)
+                intent.putExtra(Constant.PLAYLIST_ID, viewModel.getSelectPlaylistID())
+                startActivity(intent)
+            }
         }
     }
 

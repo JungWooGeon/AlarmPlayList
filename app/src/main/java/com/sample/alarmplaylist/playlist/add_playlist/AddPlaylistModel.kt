@@ -1,6 +1,7 @@
 package com.sample.alarmplaylist.playlist.add_playlist
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Room
 import com.sample.alarmplaylist.BuildConfig
 import com.sample.alarmplaylist.Constant
@@ -35,9 +36,9 @@ class AddPlaylistModel {
         thread.join()
     }
 
-    fun searchYoutube(query: String, playlistID: Int) {
+    fun searchYoutube(query: String, playlistID: Int, youtubeApiSearch: String) {
         // retrofit 동기적 사용
-        val retrofit = Retrofit.Builder().baseUrl(BuildConfig.YOUTUBE_API_SEARCH)
+        val retrofit = Retrofit.Builder().baseUrl(youtubeApiSearch)
             .addConverterFactory(GsonConverterFactory.create()).build()
         val service = retrofit.create(SearchVideoInterface::class.java)
 
@@ -50,7 +51,6 @@ class AddPlaylistModel {
             ).execute().body()
 
             youtubeList.clear()
-
             for (i in response?.items!!.indices) {
                 youtubeList.add(Youtube(null,
                     response.items[i].id.videoId,
