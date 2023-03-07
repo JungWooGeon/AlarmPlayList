@@ -1,5 +1,8 @@
 # AlarmPlayList
 
+<img src="https://user-images.githubusercontent.com/61993128/223498208-cf1e54ce-e18f-46f9-966d-c1b2cda34bf6.png" width="300" height="300" />
+
+<br><br>
 
 ### 💡 알람 음악 플레이리스트 <br>
 Android 알람 실행 시 플레이리스트에 있는 음악 목록을 차례대로 재생하는 앱
