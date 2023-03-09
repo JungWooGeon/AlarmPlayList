@@ -1,10 +1,14 @@
 package com.sample.alarmplaylist.playlist.add_playlist
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.widget.Toast
 import androidx.room.Room
 import com.sample.alarmplaylist.BuildConfig
 import com.sample.alarmplaylist.Constant
+import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.playlist.api_retrofit.SearchVideoInterface
 import com.sample.alarmplaylist.playlist.youtube_db.Youtube
 import com.sample.alarmplaylist.playlist.youtube_db.YoutubeDataBase
@@ -36,7 +40,7 @@ class AddPlaylistModel {
         thread.join()
     }
 
-    fun searchYoutube(query: String, playlistID: Int, youtubeApiSearch: String) {
+    fun searchYoutube(context: Context, query: String, playlistID: Int, youtubeApiSearch: String) {
         // retrofit 동기적 사용
         val retrofit = Retrofit.Builder().baseUrl(youtubeApiSearch)
             .addConverterFactory(GsonConverterFactory.create()).build()
@@ -51,13 +55,22 @@ class AddPlaylistModel {
             ).execute().body()
 
             youtubeList.clear()
-            for (i in response?.items!!.indices) {
-                youtubeList.add(Youtube(null,
-                    response.items[i].id.videoId,
-                    response.items[i].snippet.title,
-                    response.items[i].snippet.thumbnails.default.url,
-                    playlistID
-                ))
+
+            if (response?.items != null) {
+                for (i in response.items.indices) {
+                    youtubeList.add(Youtube(null,
+                        response.items[i].id.videoId,
+                        response.items[i].snippet.title,
+                        response.items[i].snippet.thumbnails.default.url,
+                        playlistID
+                    ))
+                }
+            } else {
+                // Main UI Thread 에 Handler 와 Loop 로 연결 후, Toast message 출력
+                val handler = Handler(Looper.getMainLooper())
+                handler.postDelayed({
+                    Toast.makeText(context, context.getString(R.string.fail_search_retry), Toast.LENGTH_SHORT).show()
+                }, 0)
             }
         }
 

@@ -19,8 +19,8 @@ class AddPlaylistViewModel: ViewModel() {
         model.addMusicToPlaylist(context, pos, playlistID)
     }
 
-    fun searchYoutube(query: String, playlistID: Int, youtubeApiSearch: String) {
-        model.searchYoutube(query, playlistID, youtubeApiSearch)
+    fun searchYoutube(context: Context, query: String, playlistID: Int, youtubeApiSearch: String) {
+        model.searchYoutube(context, query, playlistID, youtubeApiSearch)
         youtubeList.value = model.youtubeList
     }
 }

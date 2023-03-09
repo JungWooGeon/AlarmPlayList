@@ -42,4 +42,5 @@
     <string name="plz_input_search_word">검색어를 입력하시오</string>
     <string name="plz_input_title">제목을 입력해주세요</string>
     <string name="plz_add_first_playlist">플레이리스트를 먼저 추가해주세요</string>
+    <string name="fail_search_retry">"오류가 발생하였습니다"</string>
 </resources>
