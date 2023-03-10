@@ -36,16 +36,17 @@ Android 알람 실행 시 직접 만든 플레이리스트에 있는 음악 목�
 
 <br>
 
-<img src="https://user-images.githubusercontent.com/61993128/223495081-302d3d5c-1f93-4912-92dc-c0e1749aad8d.jpg" width="300" height="600" /><img src="https://user-images.githubusercontent.com/61993128/223495121-b0662450-a407-4e7e-ae6c-11d8723f000e.jpg" width="300" height="600" />
+<img src="https://user-images.githubusercontent.com/61993128/224250377-a5722fe6-cd39-4d05-bc84-026847514a27.png" width="315" height="560"/> <img src="https://user-images.githubusercontent.com/61993128/224250390-d64e670f-f0e2-4eb5-9b83-b98646210f6b.png" width="315" height="560" />
 
-<br>
+<img src="https://user-images.githubusercontent.com/61993128/224250394-88d9be46-cc35-4bc7-82e3-2820bb67c3a8.png" width="315" height="560" /> <img src="https://user-images.githubusercontent.com/61993128/224250399-939d92fd-2358-426a-81f1-b415a5731c83.png" width="315" height="560" />
 
-<img src="https://user-images.githubusercontent.com/61993128/223495140-96145338-1cde-456a-a320-ce1fd69fc4a2.jpg" width="300" height="600" /><img src="https://user-images.githubusercontent.com/61993128/223495163-2b0c92d1-9e77-4b5d-a5cb-2a7cb2b05a8b.jpg" width="300" height="600" />
+<img src="https://user-images.githubusercontent.com/61993128/224250410-469a041f-9e1a-4d8e-93aa-9fb581f54418.png" width="315" height="560" />
 
-<br>
 
-<img src="https://user-images.githubusercontent.com/61993128/223495172-fb8cea14-5ca3-4a59-a1ef-b661708c1dba.jpg" width="300" height="600" />
+<br><br>
 
+### 🔥 Google Play
+https://play.google.com/store/apps/details?id=com.sample.alarmplaylist&hl=ko
 
 <br><br>
 
