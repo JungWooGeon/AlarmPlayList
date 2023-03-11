@@ -12,8 +12,8 @@ class AddAlarmViewModel: ViewModel() {
 
     private val model = AddAlarmModel()
 
-    fun addAlarm(context: Context, hour: String, minute: String, playlistId: Int, playlistName: String) {
-        model.addAlarm(context, hour, minute, playlistId, playlistName)
+    fun addAlarm(context: Context, hour: String, minute: String, playlistId: Int, playlistName: String) : Int {
+        return model.addAlarm(context, hour, minute, playlistId, playlistName)
     }
 
     fun updateAlarm(context: Context, alarmId: Int, hour: String, minute: String, playlistId: Int, playlistName: String) {

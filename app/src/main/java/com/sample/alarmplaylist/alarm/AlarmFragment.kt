@@ -111,15 +111,15 @@ class AlarmFragment : Fragment() {
         viewModel.setCheckedChange(requireActivity().applicationContext, pos, isChecked)
 
         // isCheck == true 일 경우 알람 설정, isCheck == false 일 경우 알람 해제
-        val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(requireActivity(), AlarmReceiver::class.java).apply {
+        val alarmManager = requireActivity().applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(requireActivity().applicationContext, AlarmReceiver::class.java).apply {
             putExtra(Constant.ALARM_ID, viewModel.getAlarmInfo()?.get(pos)?.id)
             putExtra(Constant.ALARM_HOUR, viewModel.getAlarmInfo()?.get(pos)?.alarmHour)
             putExtra(Constant.ALARM_MINUTE, viewModel.getAlarmInfo()?.get(pos)?.alarmMinute)
             putExtra(Constant.PLAYLIST_ID, viewModel.getAlarmInfo()?.get(pos)?.playlistId)
             putExtra(Constant.PLAYLIST_TITLE, viewModel.getAlarmInfo()?.get(pos)?.playlistName)
         }
-        val pendingIntent = PendingIntent.getBroadcast(requireActivity(), viewModel.getAlarmInfo()?.get(pos)?.id!!, intent, Constant.ALARM_FLAG)
+        val pendingIntent = PendingIntent.getBroadcast(requireActivity().applicationContext, viewModel.getAlarmInfo()?.get(pos)?.id!!, intent, Constant.ALARM_FLAG)
 
         if (isChecked) {
             val calendar = Calendar.getInstance().apply {
@@ -134,6 +134,8 @@ class AlarmFragment : Fragment() {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
             Toast.makeText(activity, getString(R.string.complete_add_alarm), Toast.LENGTH_SHORT).show()
         } else {
+            // AlarmManager cancel
+            alarmManager.cancel(pendingIntent)
             pendingIntent?.cancel()
         }
     }

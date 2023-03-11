@@ -19,4 +19,7 @@ interface AlarmDao {
 
     @Update
     fun updateAlarm(alarm: Alarm)
+
+    @Query("SELECT * FROM alarm ORDER BY id DESC LIMIT 1")
+    fun getLast() : List<Alarm>
 }

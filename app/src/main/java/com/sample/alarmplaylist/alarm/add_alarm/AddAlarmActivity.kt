@@ -48,7 +48,7 @@ class AddAlarmActivity : AppCompatActivity() {
             } else {
                 // db 저장
                 if (alarmId == -1) {
-                    viewModel.addAlarm(applicationContext, binding.timePicker.hour.toString(),
+                    alarmId = viewModel.addAlarm(applicationContext, binding.timePicker.hour.toString(),
                         binding.timePicker.minute.toString(), playlistId, binding.playlistName.text.toString())
                 } else {
                     viewModel.updateAlarm(applicationContext, alarmId!!, binding.timePicker.hour.toString(),
@@ -56,15 +56,15 @@ class AddAlarmActivity : AppCompatActivity() {
                 }
 
                 // 알람 설정
-                val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                val intent = Intent(this, AlarmReceiver::class.java).apply {
+                val alarmManager = applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                val intent = Intent(applicationContext, AlarmReceiver::class.java).apply {
                     putExtra(Constant.ALARM_ID, alarmId)
                     putExtra(Constant.ALARM_HOUR, binding.timePicker.hour.toString())
                     putExtra(Constant.ALARM_MINUTE, binding.timePicker.minute.toString())
                     putExtra(Constant.PLAYLIST_ID, playlistId)
                     putExtra(Constant.PLAYLIST_TITLE, binding.playlistName.text)
                 }
-                val pendingIntent = PendingIntent.getBroadcast(this, alarmId!!, intent, Constant.ALARM_FLAG)
+                val pendingIntent = PendingIntent.getBroadcast(applicationContext, alarmId!!, intent, Constant.ALARM_FLAG)
 
                 val calendar = Calendar.getInstance().apply {
                     set(Calendar.HOUR_OF_DAY, binding.timePicker.hour)
