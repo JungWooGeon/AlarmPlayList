@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AlarmPlayList</string>
+    <string name="app_name">일어나! - 튜브 목록 예약 알람</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
