@@ -46,4 +46,5 @@
     <string name="check_media_volume">※ 알람 실행 시 기기에 설정된 미디어 볼륨으로 실행됩니다</string>
     <string name="permit_notifiation_permission">알림 권한이 허용되었습니다</string>
     <string name="request_notification_permission">앱을 사용하기 위해 알림 권한이 필요합니다</string>
+    <string name="plz_permit_notification_permission">앱을 사용하기 위해 알림 권한을 허용해주세요</string>
 </resources>

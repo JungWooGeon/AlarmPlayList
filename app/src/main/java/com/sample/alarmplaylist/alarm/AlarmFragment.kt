@@ -6,11 +6,14 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +25,7 @@ import com.sample.alarmplaylist.alarm.add_alarm.AddAlarmActivity
 import com.sample.alarmplaylist.alarm.notification.AlarmReceiver
 import com.sample.alarmplaylist.databinding.FragmentAlarmBinding
 import java.util.*
+import kotlin.system.exitProcess
 
 /**
  * 알람 정보를 보여주는 화면이고, 알람을 추가하거나 변경할 수 있는 AddAlarmActivity 를 띄우는 역할을 한다.
@@ -150,17 +154,28 @@ class AlarmFragment : Fragment() {
     private fun checkNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(requireContext().applicationContext, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-                    when (it) {
-                        true -> {
-                            Toast.makeText(context, getString(R.string.permit_notifiation_permission), Toast.LENGTH_SHORT).show()
+                if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.POST_NOTIFICATIONS)) {
+                    // 이미 권한을 거절한 경우 권한 설정 화면으로 이동
+                    Toast.makeText(context, getString(R.string.plz_permit_notification_permission), Toast.LENGTH_SHORT).show()
+                    val intent: Intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).setData(Uri.parse("package:" + requireActivity().packageName))
+                    startActivity(intent)
+                    requireActivity().finish()
+                } else {
+                    // 처음 권한 요청을 할 경우
+                    registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+                        when (it) {
+                            true -> {
+                                Toast.makeText(context, getString(R.string.permit_notifiation_permission), Toast.LENGTH_SHORT).show()
+                            }
+                            false -> {
+                                Toast.makeText(context, getString(R.string.request_notification_permission), Toast.LENGTH_SHORT).show()
+                                requireActivity().moveTaskToBack(true)
+                                requireActivity().finishAndRemoveTask()
+                                exitProcess(0)
+                            }
                         }
-                        false -> {
-                            Toast.makeText(context, getString(R.string.request_notification_permission), Toast.LENGTH_SHORT).show()
-                            requireActivity().finish()
-                        }
-                    }
-                }.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    }.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
             }
         }
     }

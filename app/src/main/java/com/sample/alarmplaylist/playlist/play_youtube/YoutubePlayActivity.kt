@@ -59,6 +59,7 @@ class YoutubePlayActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        Toast.makeText(this@YoutubePlayActivity, getString(R.string.finish_alarm), Toast.LENGTH_SHORT).show()
         // 현재 사용하고 있는 youtubePlayerView 는 종료 시 release 가 필요
         binding.youtubePlayerView.release()
         super.onDestroy()
@@ -138,7 +139,6 @@ class YoutubePlayActivity : AppCompatActivity() {
         binding.stop.setOnClickListener {
             binding.youtubePlayerView.getYouTubePlayerWhenReady(object: YouTubePlayerCallback {
                 override fun onYouTubePlayer(youTubePlayer: YouTubePlayer) {
-                    Toast.makeText(this@YoutubePlayActivity, getString(R.string.finish_alarm), Toast.LENGTH_SHORT).show()
                     youTubePlayer.pause()
                     finish()
                 }
