@@ -1,12 +1,17 @@
 package com.sample.alarmplaylist.alarm
 
+import android.Manifest
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +45,8 @@ class AlarmFragment : Fragment() {
             val intent = Intent(activity, AddAlarmActivity::class.java)
             startActivity(intent)
         }
+
+        checkNotificationPermission()
 
         return root
     }
@@ -137,6 +144,24 @@ class AlarmFragment : Fragment() {
             // AlarmManager cancel
             alarmManager.cancel(pendingIntent)
             pendingIntent?.cancel()
+        }
+    }
+
+    private fun checkNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(requireContext().applicationContext, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+                    when (it) {
+                        true -> {
+                            Toast.makeText(context, getString(R.string.permit_notifiation_permission), Toast.LENGTH_SHORT).show()
+                        }
+                        false -> {
+                            Toast.makeText(context, getString(R.string.request_notification_permission), Toast.LENGTH_SHORT).show()
+                            requireActivity().finish()
+                        }
+                    }
+                }.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
     }
 }
