@@ -75,7 +75,22 @@
             app:layout_constraintTop_toTopOf="@id/alarm_music_layout" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/auto_alarm_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoSizeMaxTextSize="18sp"
+            android:autoSizeMinTextSize="5sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
+            android:text="@string/check_auto_alarm"
+            app:layout_constraintBottom_toTopOf="@id/media_volume_textview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:targetApi="o" />
+
+        <TextView
+            android:id="@+id/media_volume_textview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:autoSizeMaxTextSize="18sp"
             android:autoSizeMinTextSize="5sp"

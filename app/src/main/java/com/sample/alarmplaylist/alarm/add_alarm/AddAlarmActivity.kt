@@ -107,5 +107,7 @@ class AddAlarmActivity : AppCompatActivity() {
             dialog.isCancelable = false
             dialog.show(supportFragmentManager, getString(R.string.select_playlist_dialog))
         }
+
+        binding.autoAlarmTextview.textSize = binding.mediaVolumeTextview.textSize
     }
 }
