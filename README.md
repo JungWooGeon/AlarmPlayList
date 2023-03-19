@@ -55,3 +55,4 @@ https://play.google.com/store/apps/details?id=com.sample.alarmplaylist&hl=ko
 - Retrofit2 를 사용해보며, api 통신을 해볼 수 있었음
 - Glide 를 사용해보며, 이미지 처리를 해볼 수 있었음
 - AlarmManager 를 사용하여 정시에 울리는 알람 이벤트를 구현해볼 수 있었음
+- Notification 을 사용하여 알림 기능을 설정할 수 있었음
