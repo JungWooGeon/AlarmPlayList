@@ -14,7 +14,7 @@ Android 알람 실행 시 직접 만든 플레이리스트에 있는 음악 목�
 ### 🛠 사용
  - android, android studio
  - kotlin
- - MVVM, Room DB, Retrofit2, Glide, AlarmManager, Notifiaction, Coroutine
+ - MVVM, Room DB, Retrofit2, Glide, AlarmManager, Notification, Coroutine
  - BroadcastReceiver, Service
 
 <br><br>
@@ -47,8 +47,3 @@ Android 알람 실행 시 직접 만든 플레이리스트에 있는 음악 목�
 
 ### 🔥 Google Play
 https://play.google.com/store/apps/details?id=com.sample.alarmplaylist&hl=ko
-
-<br><br>
-
-### 📃 Learned
- 
