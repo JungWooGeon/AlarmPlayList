@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sample.alarmplaylist.Constant
+import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.databinding.ActivityAddPlaylistBinding
 import com.sample.alarmplaylist.playlist.adapter.SearchAdapter
@@ -31,7 +31,7 @@ class AddPlaylistActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        playlistID = intent.getIntExtra(Constant.PLAYLIST_ID, DEFAULT_PLAY_LIST_ID)
+        playlistID = intent.getIntExtra(Constants.PLAYLIST_ID, DEFAULT_PLAY_LIST_ID)
 
         binding = ActivityAddPlaylistBinding.inflate(layoutInflater)
         setContentView(binding.root)

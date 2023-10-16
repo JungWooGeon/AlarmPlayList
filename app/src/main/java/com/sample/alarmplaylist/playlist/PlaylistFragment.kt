@@ -10,14 +10,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sample.alarmplaylist.Constant
+import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.databinding.FragmentPlaylistBinding
 import com.sample.alarmplaylist.playlist.adapter.MusicListAdapter
 import com.sample.alarmplaylist.playlist.adapter.PlayListAdapter
 import com.sample.alarmplaylist.playlist.add_playlist.AddPlaylistActivity
 import com.sample.alarmplaylist.playlist.dialog.RenamePlayListDialog
-import com.sample.alarmplaylist.playlist.playlist_db.PlayList
+import com.sample.alarmplaylist.playlist.playlist_db.Playlist
 import com.sample.alarmplaylist.playlist.youtube_db.Youtube
 
 /**
@@ -67,14 +67,14 @@ class PlaylistFragment : Fragment() {
                 Toast.makeText(activity, getString(R.string.plz_add_first_playlist), Toast.LENGTH_SHORT).show()
             } else {
                 val intent = Intent(requireActivity(), AddPlaylistActivity::class.java)
-                intent.putExtra(Constant.PLAYLIST_ID, viewModel.getSelectPlaylistID())
+                intent.putExtra(Constants.PLAYLIST_ID, viewModel.getSelectPlaylistID())
                 startActivity(intent)
             }
         }
     }
 
     // init playlist recyclerview
-    private fun initPlayList(playList: List<PlayList>) {
+    private fun initPlayList(playList: List<Playlist>) {
         val playListRecyclerViewAdapter = PlayListAdapter(requireActivity().applicationContext, requireActivity().menuInflater)
         // PlaylistFragment 와 adapter 사이에 통신하기 위한 listener
         playListRecyclerViewAdapter.listener = (object : PlayListAdapter.AdapterListener {
@@ -107,7 +107,7 @@ class PlaylistFragment : Fragment() {
         })
 
         // DB 에서 변경된 정보(list)를 adapter 에 반영
-        playListRecyclerViewAdapter.list = playList as ArrayList<PlayList>
+        playListRecyclerViewAdapter.list = playList as ArrayList<Playlist>
         binding.playlist.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

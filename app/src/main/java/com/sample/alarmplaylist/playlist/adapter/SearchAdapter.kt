@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-import com.sample.alarmplaylist.Constant
+import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.playlist.youtube_db.Youtube
 
@@ -44,7 +44,7 @@ class SearchAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter<Sea
         holder.youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 val videoId = list[holder.bindingAdapterPosition].videoId
-                youTubePlayer.cueVideo(videoId, Constant.YOUTUBE_PLAYER_VIEW_START_SECONDS)
+                youTubePlayer.cueVideo(videoId, Constants.YOUTUBE_PLAYER_VIEW_START_SECONDS)
             }
         })
 

@@ -3,7 +3,7 @@ package com.sample.alarmplaylist.playlist
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sample.alarmplaylist.playlist.playlist_db.PlayList
+import com.sample.alarmplaylist.playlist.playlist_db.Playlist
 import com.sample.alarmplaylist.playlist.youtube_db.Youtube
 
 /**
@@ -19,7 +19,7 @@ import com.sample.alarmplaylist.playlist.youtube_db.Youtube
 class PlaylistViewModel : ViewModel() {
 
     private val model: PlaylistModel = PlaylistModel()
-    val playList = MutableLiveData<List<PlayList>>()
+    val playList = MutableLiveData<List<Playlist>>()
     val musicList = MutableLiveData<List<Youtube>>()
 
     fun readPlayList(context: Context) {

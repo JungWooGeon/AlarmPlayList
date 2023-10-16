@@ -3,11 +3,10 @@ package com.sample.alarmplaylist.playlist.add_playlist
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.Toast
 import androidx.room.Room
 import com.sample.alarmplaylist.BuildConfig
-import com.sample.alarmplaylist.Constant
+import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.playlist.api_retrofit.SearchVideoInterface
 import com.sample.alarmplaylist.playlist.youtube_db.Youtube
@@ -30,7 +29,7 @@ class AddPlaylistModel {
     val youtubeList = ArrayList<Youtube>()
 
     fun addMusicToPlaylist(context: Context, pos: Int, playlistID: Int) {
-        val db : YoutubeDataBase = Room.databaseBuilder(context, YoutubeDataBase::class.java, Constant.YOUTUBE_DB).build()
+        val db : YoutubeDataBase = Room.databaseBuilder(context, YoutubeDataBase::class.java, Constants.YOUTUBE_DB).build()
 
         val thread = Thread {
             db.youtubeDao().insert(Youtube(null, youtubeList[pos].videoId, youtubeList[pos].title, youtubeList[pos].thumbnail, playlistID))

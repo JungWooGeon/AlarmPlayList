@@ -11,9 +11,9 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.sample.alarmplaylist.Constant
+import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
-import com.sample.alarmplaylist.playlist.playlist_db.PlayList
+import com.sample.alarmplaylist.playlist.playlist_db.Playlist
 
 /**
  * PlaylistFragment 플레이리스트 recycler view adapter
@@ -36,7 +36,7 @@ class PlayListAdapter(
     }
 
     var listener: AdapterListener? = null
-    var list = ArrayList<PlayList>()
+    var list = ArrayList<Playlist>()
     var selectedImgView: AppCompatImageView? = null
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -56,7 +56,7 @@ class PlayListAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // 플레이리스트 이미지 설정
-        when (list[position].id!! % Constant.PLAYLIST_IMAGE_COUNT) {
+        when (list[position].id!! % Constants.PLAYLIST_IMAGE_COUNT) {
             0 -> holder.imgView.setImageResource(R.drawable.playlist1)
             1 -> holder.imgView.setImageResource(R.drawable.playlist2)
             2 -> holder.imgView.setImageResource(R.drawable.playlist3)
@@ -69,7 +69,7 @@ class PlayListAdapter(
         }
 
         // 첫 번째 플레이리스트를 선택된 것으로 초기화
-        if (position == Constant.DEFAULT_SELECTED_POSITION) {
+        if (position == Constants.DEFAULT_SELECTED_POSITION) {
             selectedImgView = holder.imgView
             holder.imgView.alpha = SELECTED_IMAGE_VIEW_ALPHA
             holder.cardView

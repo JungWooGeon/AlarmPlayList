@@ -2,10 +2,10 @@ package com.sample.alarmplaylist.playlist
 
 import android.content.Context
 import androidx.room.Room
-import com.sample.alarmplaylist.Constant
+import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
-import com.sample.alarmplaylist.playlist.playlist_db.PlayList
-import com.sample.alarmplaylist.playlist.playlist_db.PlayListDataBase
+import com.sample.alarmplaylist.playlist.playlist_db.Playlist
+import com.sample.alarmplaylist.playlist.playlist_db.PlaylistDataBase
 import com.sample.alarmplaylist.playlist.youtube_db.Youtube
 import com.sample.alarmplaylist.playlist.youtube_db.YoutubeDataBase
 
@@ -26,13 +26,13 @@ class PlaylistModel {
         private const val DEFAULT_SELECT_PLAYLIST_ID = 0
     }
 
-    lateinit var playList : List<PlayList>
+    lateinit var playList : List<Playlist>
     lateinit var musicList : List<Youtube>
 
     var selectPlaylistID = DEFAULT_SELECT_PLAYLIST_ID
 
     fun readPlayList(context: Context) {
-        val db : PlayListDataBase = Room.databaseBuilder(context, PlayListDataBase::class.java, Constant.PLAYLIST_DB).build()
+        val db : PlaylistDataBase = Room.databaseBuilder(context, PlaylistDataBase::class.java, Constants.PLAYLIST_DB).build()
 
         val thread = Thread { playList = db.playListDao().getAll() }
 
@@ -41,9 +41,9 @@ class PlaylistModel {
     }
 
     fun addPlayList(context: Context) {
-        val db : PlayListDataBase = Room.databaseBuilder(context, PlayListDataBase::class.java, Constant.PLAYLIST_DB).build()
+        val db : PlaylistDataBase = Room.databaseBuilder(context, PlaylistDataBase::class.java, Constants.PLAYLIST_DB).build()
 
-        val thread = Thread { db.playListDao().insertPlayList(PlayList(null, context.getString(R.string.playlist))) }
+        val thread = Thread { db.playListDao().insertPlayList(Playlist(null, context.getString(R.string.playlist))) }
 
         thread.start()
         thread.join()
@@ -51,17 +51,17 @@ class PlaylistModel {
 
     fun renamePlayList(context: Context, pos: Int, title: String) {
         playList[pos].playListTitle = title
-        val db : PlayListDataBase = Room.databaseBuilder(context, PlayListDataBase::class.java, Constant.PLAYLIST_DB).build()
+        val db : PlaylistDataBase = Room.databaseBuilder(context, PlaylistDataBase::class.java, Constants.PLAYLIST_DB).build()
 
-        val thread = Thread { db.playListDao().updatePlayList(PlayList(playList[pos].id, title)) }
+        val thread = Thread { db.playListDao().updatePlayList(Playlist(playList[pos].id, title)) }
 
         thread.start()
         thread.join()
     }
 
     fun deletePlayList(context: Context, pos: Int) {
-        val playListDB : PlayListDataBase = Room.databaseBuilder(context, PlayListDataBase::class.java, Constant.PLAYLIST_DB).build()
-        val youtubeDB : YoutubeDataBase = Room.databaseBuilder(context, YoutubeDataBase::class.java, Constant.YOUTUBE_DB).build()
+        val playListDB : PlaylistDataBase = Room.databaseBuilder(context, PlaylistDataBase::class.java, Constants.PLAYLIST_DB).build()
+        val youtubeDB : YoutubeDataBase = Room.databaseBuilder(context, YoutubeDataBase::class.java, Constants.YOUTUBE_DB).build()
 
         val thread = Thread {
             playListDB.playListDao().deletePlayList(playList[pos])
@@ -82,7 +82,7 @@ class PlaylistModel {
 
         selectPlaylistID = playList[pos].id!!
 
-        val db : YoutubeDataBase = Room.databaseBuilder(context, YoutubeDataBase::class.java, Constant.YOUTUBE_DB).build()
+        val db : YoutubeDataBase = Room.databaseBuilder(context, YoutubeDataBase::class.java, Constants.YOUTUBE_DB).build()
 
         val thread = Thread { musicList = db.youtubeDao().getSelected(playList[pos].id!!) }
 
@@ -91,7 +91,7 @@ class PlaylistModel {
     }
 
     fun deleteMusic(context: Context, pos: Int) {
-        val db : YoutubeDataBase = Room.databaseBuilder(context, YoutubeDataBase::class.java, Constant.YOUTUBE_DB).build()
+        val db : YoutubeDataBase = Room.databaseBuilder(context, YoutubeDataBase::class.java, Constants.YOUTUBE_DB).build()
 
         val thread = Thread { db.youtubeDao().delete(musicList[pos]) }
 

@@ -13,7 +13,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstan
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
-import com.sample.alarmplaylist.Constant
+import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.databinding.ActivityYoutubePlayBinding
 import com.sample.alarmplaylist.playlist.adapter.MusicListAdapter
@@ -49,7 +49,7 @@ class YoutubePlayActivity : AppCompatActivity() {
         binding = ActivityYoutubePlayBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.readYoutubeList(applicationContext, intent.getIntExtra(Constant.PLAYLIST_ID, INTENT_PLAYLIST_ID_DEFAULT_VALUE))
+        viewModel.readYoutubeList(applicationContext, intent.getIntExtra(Constants.PLAYLIST_ID, INTENT_PLAYLIST_ID_DEFAULT_VALUE))
         viewModel.youtubeList.observe(this) { list -> initMusicList(list)}
 
         // youtubePlayerView 설정
@@ -115,7 +115,7 @@ class YoutubePlayActivity : AppCompatActivity() {
                         currentPlaylistPosition -= POSITION_DEDUCTION
                         youTubePlayer.loadVideo(
                             musicListRecyclerViewAdapter.list[currentPlaylistPosition++].videoId,
-                            Constant.YOUTUBE_PLAYER_VIEW_START_SECONDS
+                            Constants.YOUTUBE_PLAYER_VIEW_START_SECONDS
                         )
                     }
                 }
@@ -129,7 +129,7 @@ class YoutubePlayActivity : AppCompatActivity() {
                     if (currentPlaylistPosition < musicListRecyclerViewAdapter.list.size)
                         youTubePlayer.loadVideo(
                             musicListRecyclerViewAdapter.list[currentPlaylistPosition++].videoId,
-                            Constant.YOUTUBE_PLAYER_VIEW_START_SECONDS
+                            Constants.YOUTUBE_PLAYER_VIEW_START_SECONDS
                         )
                 }
             })
@@ -153,7 +153,7 @@ class YoutubePlayActivity : AppCompatActivity() {
                 if (currentPlaylistPosition < musicListRecyclerViewAdapter.list.size) {
                     youTubePlayer.loadVideo(
                         musicListRecyclerViewAdapter.list[currentPlaylistPosition++].videoId,
-                        Constant.YOUTUBE_PLAYER_VIEW_START_SECONDS
+                        Constants.YOUTUBE_PLAYER_VIEW_START_SECONDS
                     )
                 }
             }
@@ -163,7 +163,7 @@ class YoutubePlayActivity : AppCompatActivity() {
                 if (state == PlayerConstants.PlayerState.ENDED && currentPlaylistPosition < musicListRecyclerViewAdapter.list.size) {
                     youTubePlayer.loadVideo(
                         musicListRecyclerViewAdapter.list[currentPlaylistPosition++].videoId,
-                        Constant.YOUTUBE_PLAYER_VIEW_START_SECONDS
+                        Constants.YOUTUBE_PLAYER_VIEW_START_SECONDS
                     )
                 }
             }

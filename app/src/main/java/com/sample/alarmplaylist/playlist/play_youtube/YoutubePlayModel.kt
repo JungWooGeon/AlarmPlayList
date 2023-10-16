@@ -2,7 +2,7 @@ package com.sample.alarmplaylist.playlist.play_youtube
 
 import android.content.Context
 import androidx.room.Room
-import com.sample.alarmplaylist.Constant
+import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.playlist.youtube_db.Youtube
 import com.sample.alarmplaylist.playlist.youtube_db.YoutubeDataBase
 
@@ -14,7 +14,7 @@ class YoutubePlayModel {
     var youtubeList : List<Youtube>? = null
 
     fun readYoutubeList(context: Context, playListId: Int) {
-        val db : YoutubeDataBase = Room.databaseBuilder(context, YoutubeDataBase::class.java, Constant.YOUTUBE_DB).build()
+        val db : YoutubeDataBase = Room.databaseBuilder(context, YoutubeDataBase::class.java, Constants.YOUTUBE_DB).build()
 
         val thread = Thread { youtubeList = db.youtubeDao().getSelected(playListId) }
 
