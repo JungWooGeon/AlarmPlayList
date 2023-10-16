@@ -12,7 +12,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
-import com.sample.alarmplaylist.playlist.youtube_db.Youtube
+import com.sample.alarmplaylist.data.entity.Youtube
 
 /**
  * AddPlaylistActivity 에서 사용하는 검색 결과 recyclerview adapter

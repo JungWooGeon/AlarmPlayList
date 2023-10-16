@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_playlist"
-        android:name="com.sample.alarmplaylist.playlist.PlaylistFragment"
+        android:name="com.sample.alarmplaylist.presentation.playlist.PlaylistFragment"
         android:label="@string/playlist"
         tools:layout="@layout/fragment_playlist" />
 

@@ -3,8 +3,8 @@ package com.sample.alarmplaylist.playlist.play_youtube
 import android.content.Context
 import androidx.room.Room
 import com.sample.alarmplaylist.Constants
-import com.sample.alarmplaylist.playlist.youtube_db.Youtube
-import com.sample.alarmplaylist.playlist.youtube_db.YoutubeDataBase
+import com.sample.alarmplaylist.data.entity.Youtube
+import com.sample.alarmplaylist.data.db.youtube.YoutubeDataBase
 
 /**
  * YoutubePlayViewModel Model

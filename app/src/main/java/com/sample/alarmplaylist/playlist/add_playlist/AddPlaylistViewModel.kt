@@ -3,7 +3,7 @@ package com.sample.alarmplaylist.playlist.add_playlist
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sample.alarmplaylist.playlist.youtube_db.Youtube
+import com.sample.alarmplaylist.data.entity.Youtube
 
 /**
  * AddPlaylistActivity ViewModel

@@ -11,7 +11,7 @@ import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.databinding.ActivityAddPlaylistBinding
 import com.sample.alarmplaylist.playlist.adapter.SearchAdapter
-import com.sample.alarmplaylist.playlist.youtube_db.Youtube
+import com.sample.alarmplaylist.data.entity.Youtube
 
 /**
  * PlaylistFragment 에서 실행

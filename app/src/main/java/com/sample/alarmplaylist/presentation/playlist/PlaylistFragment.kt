@@ -1,6 +1,5 @@
-package com.sample.alarmplaylist.playlist
+package com.sample.alarmplaylist.presentation.playlist
 
-import android.annotation.SuppressLint
 import android.content.*
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,17 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
+import com.sample.alarmplaylist.data.entity.Playlist
+import com.sample.alarmplaylist.data.entity.Youtube
 import com.sample.alarmplaylist.databinding.FragmentPlaylistBinding
 import com.sample.alarmplaylist.playlist.adapter.MusicListAdapter
-import com.sample.alarmplaylist.playlist.adapter.PlayListAdapter
 import com.sample.alarmplaylist.playlist.add_playlist.AddPlaylistActivity
-import com.sample.alarmplaylist.playlist.dialog.RenamePlayListDialog
-import com.sample.alarmplaylist.playlist.playlist_db.Playlist
-import com.sample.alarmplaylist.playlist.youtube_db.Youtube
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 플레이리스트 정보를 보여주는 화면이고, 플레이리스트를 추가하거나 AddPlaylistActivity 를 띄워
@@ -29,14 +26,14 @@ class PlaylistFragment : Fragment() {
     private var _binding: FragmentPlaylistBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: PlaylistViewModel
+    private val viewModel by viewModel<PlaylistViewModel>()
+
+    private var selectedPlaylistId = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        viewModel = ViewModelProvider(this)[PlaylistViewModel::class.java]
-
         // 플레이리스트 혹은 음악 정보가 변경 될 때, recyclerview update
-        viewModel.playList.observe(viewLifecycleOwner) { list -> initPlayList(list) }
-        viewModel.musicList.observe(viewLifecycleOwner) { list -> initMusicList(list) }
+        viewModel.playLists.observe(viewLifecycleOwner) { playlists -> initPlaylists(playlists) }
+        viewModel.youtubes.observe(viewLifecycleOwner) { youtubes -> initYoutubes(youtubes) }
 
         _binding = FragmentPlaylistBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -49,7 +46,7 @@ class PlaylistFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         // 음악이 추가되고 다시 이 activity 로 전환되었을 시 플레이리스트 목록 update 를 통해 화면 재구성
-        viewModel.readPlayList(requireActivity().applicationContext)
+        viewModel.loadPlaylists()
     }
 
     override fun onDestroyView() {
@@ -59,7 +56,7 @@ class PlaylistFragment : Fragment() {
 
     private fun initButton() {
         // 플레이리스트 추가 버튼을 눌렀을 경우, DB 에 플레이리스트를 추가
-        binding.btnAddList.setOnClickListener { viewModel.addPlayList(requireActivity().applicationContext) }
+        binding.btnAddList.setOnClickListener { viewModel.addPlayList(getString(R.string.playlist)) }
 
         // 음악 추가 버튼을 눌렀을 경우, AddPlaylistActivity 를 띄운다.
         binding.btnAddMusic.setOnClickListener {
@@ -67,31 +64,35 @@ class PlaylistFragment : Fragment() {
                 Toast.makeText(activity, getString(R.string.plz_add_first_playlist), Toast.LENGTH_SHORT).show()
             } else {
                 val intent = Intent(requireActivity(), AddPlaylistActivity::class.java)
-                intent.putExtra(Constants.PLAYLIST_ID, viewModel.getSelectPlaylistID())
+                intent.putExtra(Constants.PLAYLIST_ID, selectedPlaylistId)
                 startActivity(intent)
             }
         }
     }
 
     // init playlist recyclerview
-    private fun initPlayList(playList: List<Playlist>) {
+    private fun initPlaylists(playList: List<Playlist>) {
         val playListRecyclerViewAdapter = PlayListAdapter(requireActivity().applicationContext, requireActivity().menuInflater)
-        // PlaylistFragment 와 adapter 사이에 통신하기 위한 listener
+
         playListRecyclerViewAdapter.listener = (object : PlayListAdapter.AdapterListener {
             // 이미지 선택 시, 선택한 이미지에 해당하는 정보를 조회하여 Model 에 반영
-            override fun selectImg(pos: Int) { viewModel.selectImg(requireActivity(), pos) }
+            override fun selectImg(id: Int) {
+                selectedPlaylistId = id
+                viewModel.getSelectedYoutubesById(id)
+            }
 
             // 플레이리스트의 '더보기' 메뉴에서 '이름 변경'을 클릭하였을 경우 RenamePlayListDialog 를 띄움
-            override fun renamePlayList(pos: Int) {
+            override fun renamePlayList(pos: Int, playlist: Playlist) {
                 val dialog = RenamePlayListDialog((object: RenamePlayListDialog.DialogListener {
-                    // PlaylistFragment 와 dialog 사이에 통신하기 위한 listener
-                    @SuppressLint("NotifyDataSetChanged")
                     override fun rename(title: String) {
                         // 이름을 정상적으로 변경하면 DB 에 반영 후, recyclerview 새로고침
-                        viewModel.renamePlayList(requireActivity().applicationContext, pos, title)
+                        playlist.playListTitle = title
+                        viewModel.updatePlaylist(playlist)
+
+                        Toast.makeText(activity, getString(R.string.title) + playlist.playListTitle + getString(R.string.update), Toast.LENGTH_SHORT).show()
+
                         playListRecyclerViewAdapter.list[pos].playListTitle = title
-                        playListRecyclerViewAdapter.notifyDataSetChanged()
-                        Toast.makeText(activity, getString(R.string.title) + title + getString(R.string.update), Toast.LENGTH_SHORT).show()
+                        playListRecyclerViewAdapter.notifyItemChanged(pos)
                     }
                 }))
                 // 알림창이 띄워져있는 동안 배경 클릭 막기
@@ -100,8 +101,8 @@ class PlaylistFragment : Fragment() {
             }
 
             // 플레이리스트의 '더보기' 메뉴에서 '삭제'를 클릭하였을 경우 해당 플레이리스트 삭제
-            override fun deletePlayList(pos: Int) {
-                viewModel.deletePlayList(requireActivity().applicationContext, pos)
+            override fun deletePlayList(id: Int) {
+                viewModel.deletePlayList(id)
                 Toast.makeText(activity, getString(R.string.delete_playlist), Toast.LENGTH_SHORT).show()
             }
         })
@@ -123,19 +124,18 @@ class PlaylistFragment : Fragment() {
     }
 
     // init musicList recyclerview
-    private fun initMusicList(musicList: List<Youtube>) {
+    private fun initYoutubes(youtubes: List<Youtube>) {
         val musicListRecyclerViewAdapter = MusicListAdapter(requireActivity(), requireActivity().menuInflater)
-        // PlaylistFragment 와 adapter 사이에 통신하기 위한 listener
         musicListRecyclerViewAdapter.listener = (object : MusicListAdapter.AdapterListener {
             // 음악 목록의 '더보기' 메뉴에서 '삭제'를 클릭하였을 경우 해당 음악 삭제
-            override fun deleteMusic(pos: Int) {
-                viewModel.deleteMusic(requireActivity(), pos)
+            override fun deleteMusic(id: Int) {
+                viewModel.deleteYoutubeById(id)
                 Toast.makeText(activity, getString(R.string.delete_music), Toast.LENGTH_SHORT).show()
             }
         })
 
         // DB 에서 변경된 정보(list)를 adapter 에 반영
-        musicListRecyclerViewAdapter.list = musicList as ArrayList<Youtube>
+        musicListRecyclerViewAdapter.list = youtubes.toCollection(ArrayList())
         binding.musicList.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.databinding.SelectPlaylistDialogBinding
-import com.sample.alarmplaylist.playlist.playlist_db.Playlist
+import com.sample.alarmplaylist.data.entity.Playlist
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**

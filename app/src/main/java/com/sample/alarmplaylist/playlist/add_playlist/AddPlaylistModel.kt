@@ -9,8 +9,8 @@ import com.sample.alarmplaylist.BuildConfig
 import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.playlist.api_retrofit.SearchVideoInterface
-import com.sample.alarmplaylist.playlist.youtube_db.Youtube
-import com.sample.alarmplaylist.playlist.youtube_db.YoutubeDataBase
+import com.sample.alarmplaylist.data.entity.Youtube
+import com.sample.alarmplaylist.data.db.youtube.YoutubeDataBase
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -57,12 +57,14 @@ class AddPlaylistModel {
 
             if (response?.items != null) {
                 for (i in response.items.indices) {
-                    youtubeList.add(Youtube(null,
+                    youtubeList.add(
+                        Youtube(null,
                         response.items[i].id.videoId,
                         response.items[i].snippet.title,
                         response.items[i].snippet.thumbnails.default.url,
                         playlistID
-                    ))
+                    )
+                    )
                 }
             } else {
                 // Main UI Thread 에 Handler 와 Loop 로 연결 후, Toast message 출력

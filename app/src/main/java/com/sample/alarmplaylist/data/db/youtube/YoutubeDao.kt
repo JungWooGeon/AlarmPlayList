@@ -1,9 +1,10 @@
-package com.sample.alarmplaylist.playlist.youtube_db
+package com.sample.alarmplaylist.data.db.youtube
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.sample.alarmplaylist.data.entity.Youtube
 
 @Dao
 interface YoutubeDao {
@@ -15,6 +16,9 @@ interface YoutubeDao {
 
     @Delete
     fun delete(youtube: Youtube)
+
+    @Query("DELETE FROM youtube WHERE id == :id")
+    fun deleteYoutubeById(id: Int)
 
     @Query("DELETE FROM youtube WHERE playlistId == :id")
     fun deleteSelected(id: Int)

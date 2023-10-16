@@ -17,7 +17,7 @@ import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.databinding.ActivityYoutubePlayBinding
 import com.sample.alarmplaylist.playlist.adapter.MusicListAdapter
-import com.sample.alarmplaylist.playlist.youtube_db.Youtube
+import com.sample.alarmplaylist.data.entity.Youtube
 
 /**
  * 실질적인 알람이 실행되는 Activity

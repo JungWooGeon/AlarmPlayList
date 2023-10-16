@@ -11,7 +11,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sample.alarmplaylist.R
-import com.sample.alarmplaylist.playlist.youtube_db.Youtube
+import com.sample.alarmplaylist.data.entity.Youtube
 
 /**
  * PlaylistFragment 음악리스트 recycler view adapter
@@ -19,12 +19,7 @@ import com.sample.alarmplaylist.playlist.youtube_db.Youtube
 class MusicListAdapter(
     private val context: Context,
     private val menuInflater: MenuInflater
-    ) : RecyclerView.Adapter<MusicListAdapter.MyViewHolder>() {
-
-    // PlaylistFragment 와 통신하기 위한 listener
-    interface AdapterListener {
-        fun deleteMusic(pos: Int)
-    }
+) : RecyclerView.Adapter<MusicListAdapter.MyViewHolder>() {
 
     var listener: AdapterListener? = null
     var list = ArrayList<Youtube>()
@@ -54,7 +49,9 @@ class MusicListAdapter(
             menuInflater.inflate(R.menu.musiclist_popup_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.delete_menu -> { listener?.deleteMusic(position) }
+                    R.id.delete_menu -> {
+                        listener?.deleteMusic(list[holder.absoluteAdapterPosition].id!!)
+                    }
                 }
                 false
             }
@@ -64,5 +61,10 @@ class MusicListAdapter(
 
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    // PlaylistFragment 와 통신하기 위한 listener
+    interface AdapterListener {
+        fun deleteMusic(id: Int)
     }
 }

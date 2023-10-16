@@ -1,20 +1,21 @@
-package com.sample.alarmplaylist.playlist.playlist_db
+package com.sample.alarmplaylist.data.db.youtube
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.sample.alarmplaylist.Constants
+import com.sample.alarmplaylist.data.entity.Youtube
 
-@Database(entities = [Playlist::class], version = 1)
-abstract class PlaylistDataBase : RoomDatabase() {
-    abstract fun playListDao() : PlaylistDao
+@Database(entities = [Youtube::class], version = 1)
+abstract class YoutubeDataBase : RoomDatabase() {
+    abstract fun youtubeDao(): YoutubeDao
 
     companion object {
         @Volatile
-        private var INSTANCE: PlaylistDataBase? = null
+        private var INSTANCE: YoutubeDataBase? = null
 
-        fun getInstance(context: Context): PlaylistDataBase =
+        fun getInstance(context: Context): YoutubeDataBase =
             INSTANCE ?: synchronized(this) {
                 INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
             }
@@ -22,7 +23,7 @@ abstract class PlaylistDataBase : RoomDatabase() {
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(
                 context.applicationContext,
-                PlaylistDataBase::class.java, Constants.PLAYLIST_DB
+                YoutubeDataBase::class.java, Constants.YOUTUBE_DB
             ).build()
     }
 }

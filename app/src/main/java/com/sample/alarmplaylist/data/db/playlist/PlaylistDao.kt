@@ -1,10 +1,11 @@
-package com.sample.alarmplaylist.playlist.playlist_db
+package com.sample.alarmplaylist.data.db.playlist
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.sample.alarmplaylist.data.entity.Playlist
 
 @Dao
 interface PlaylistDao {
@@ -14,8 +15,8 @@ interface PlaylistDao {
     @Insert
     fun insertPlayList(playList: Playlist)
 
-    @Delete
-    fun deletePlayList(playList: Playlist)
+    @Query("DELETE FROM playlist WHERE id = :id")
+    fun deletePlaylistById(id: Int)
 
     @Update
     fun updatePlayList(playList: Playlist)

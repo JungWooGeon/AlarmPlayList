@@ -1,4 +1,4 @@
-package com.sample.alarmplaylist.playlist.adapter
+package com.sample.alarmplaylist.presentation.playlist
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
-import com.sample.alarmplaylist.playlist.playlist_db.Playlist
+import com.sample.alarmplaylist.data.entity.Playlist
 
 /**
  * PlaylistFragment 플레이리스트 recycler view adapter
@@ -26,13 +26,6 @@ class PlayListAdapter(
     companion object {
         private const val DEFAULT_IMAGE_VIEW_ALPHA = 1F
         private const val SELECTED_IMAGE_VIEW_ALPHA = 0.5F
-    }
-
-    // PlaylistFragment 와 통신하기 위한 listener
-    interface AdapterListener {
-        fun selectImg(pos: Int)
-        fun renamePlayList(pos: Int)
-        fun deletePlayList(pos: Int)
     }
 
     var listener: AdapterListener? = null
@@ -80,7 +73,7 @@ class PlayListAdapter(
             selectedImgView?.alpha = DEFAULT_IMAGE_VIEW_ALPHA
             selectedImgView = holder.imgView
             holder.imgView.alpha = SELECTED_IMAGE_VIEW_ALPHA
-            listener?.selectImg(position)
+            list[holder.absoluteAdapterPosition].id?.let { it1 -> listener?.selectImg(it1) }
         }
 
         holder.playListTitle.text = list[position].playListTitle
@@ -91,8 +84,8 @@ class PlayListAdapter(
             menuInflater.inflate(R.menu.playlist_popup_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener {
                 when (it.itemId) {
-                    R.id.rename_menu -> { listener?.renamePlayList(position) }
-                    R.id.delete_menu -> { listener?.deletePlayList(position) }
+                    R.id.rename_menu -> { listener?.renamePlayList(holder.absoluteAdapterPosition, list[holder.absoluteAdapterPosition]) }
+                    R.id.delete_menu -> { listener?.deletePlayList(list[holder.absoluteAdapterPosition].id!!) }
                 }
                 false
             }
@@ -102,5 +95,11 @@ class PlayListAdapter(
 
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    interface AdapterListener {
+        fun selectImg(id: Int)
+        fun renamePlayList(pos: Int, playlist: Playlist)
+        fun deletePlayList(id: Int)
     }
 }

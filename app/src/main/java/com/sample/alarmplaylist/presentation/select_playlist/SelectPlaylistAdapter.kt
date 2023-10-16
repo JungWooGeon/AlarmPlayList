@@ -10,7 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
-import com.sample.alarmplaylist.playlist.playlist_db.Playlist
+import com.sample.alarmplaylist.data.entity.Playlist
 
 /**
  * SelectPlaylistDialog 에 플레이리스트 정보들을 보여주는 RecyclerView 에서 사용하는 Adapter

@@ -3,9 +3,8 @@ package com.sample.alarmplaylist.presentation.select_playlist
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.domain.playlist.GetAllPlaylistsUseCase
-import com.sample.alarmplaylist.playlist.playlist_db.Playlist
+import com.sample.alarmplaylist.data.entity.Playlist
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
