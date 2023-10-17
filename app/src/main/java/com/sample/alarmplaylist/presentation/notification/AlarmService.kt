@@ -18,7 +18,7 @@ import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.data.entity.Alarm
 import com.sample.alarmplaylist.data.db.alarm.AlarmDataBase
-import com.sample.alarmplaylist.playlist.play_youtube.YoutubePlayActivity
+import com.sample.alarmplaylist.presentation.play_youtube.YoutubePlayActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

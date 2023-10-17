@@ -28,6 +28,11 @@ object Constants {
 
     const val YOUTUBE_PLAYER_VIEW_START_SECONDS = 0F
 
+    const val RETROFIT_SEARCH_PART = "snippet"
+    const val RETROFIT_SEARCH_TYPE = "video"
+
+    const val RETROFIT_SEARCH_YOUTUBE_URL = "https://www.googleapis.com/youtube/v3/"
+
     val ALARM_FLAG = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
     } else {

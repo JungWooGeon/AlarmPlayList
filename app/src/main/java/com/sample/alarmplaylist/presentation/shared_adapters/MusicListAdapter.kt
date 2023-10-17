@@ -1,4 +1,4 @@
-package com.sample.alarmplaylist.playlist.adapter
+package com.sample.alarmplaylist.presentation.shared_adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,9 +13,6 @@ import com.bumptech.glide.Glide
 import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.data.entity.Youtube
 
-/**
- * PlaylistFragment 음악리스트 recycler view adapter
- */
 class MusicListAdapter(
     private val context: Context,
     private val menuInflater: MenuInflater

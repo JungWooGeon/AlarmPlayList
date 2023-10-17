@@ -24,7 +24,7 @@ class AlarmViewModel(
 
         if (id != null) {
             viewModelScope.launch(Dispatchers.IO) {
-                setAlarmOff.value = alarmList.value?.get(position)
+                setAlarmOff.postValue(alarmList.value?.get(position))
                 deleteAlarmUseCase(id)
                 loadAlarms()  // 삭제 후, 알람 리스트 갱신
             }

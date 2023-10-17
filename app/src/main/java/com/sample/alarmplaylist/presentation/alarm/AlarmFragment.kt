@@ -79,6 +79,7 @@ class AlarmFragment : Fragment() {
             121 -> {
                 val position = item.groupId
                 viewModel.deleteAlarmAt(position)
+                Toast.makeText(requireContext(), getString(R.string.delete_alarm), Toast.LENGTH_SHORT).show()
             }
         }
         return true

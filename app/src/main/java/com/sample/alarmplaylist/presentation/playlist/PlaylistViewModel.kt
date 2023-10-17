@@ -8,8 +8,9 @@ import com.sample.alarmplaylist.data.entity.Youtube
 import com.sample.alarmplaylist.domain.playlist.AddPlaylistUseCase
 import com.sample.alarmplaylist.domain.playlist.DeletePlaylistUseCase
 import com.sample.alarmplaylist.domain.playlist.GetAllPlaylistsUseCase
+import com.sample.alarmplaylist.domain.playlist.UpdatePlaylistUseCase
 import com.sample.alarmplaylist.domain.youtube.DeleteYoutubeUseCase
-import com.sample.alarmplaylist.domain.youtube.GetSelectedYoutubes
+import com.sample.alarmplaylist.domain.youtube.GetSelectedYoutubesUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -17,7 +18,8 @@ class PlaylistViewModel(
     private val getAllPlaylistsUseCase: GetAllPlaylistsUseCase,
     private val addPlaylistUseCase: AddPlaylistUseCase,
     private val deletePlaylistUseCase: DeletePlaylistUseCase,
-    private val getSelectedYoutubes: GetSelectedYoutubes,
+    private val updatePlaylistUseCase: UpdatePlaylistUseCase,
+    private val getSelectedYoutubesUseCase: GetSelectedYoutubesUseCase,
     private val deleteYoutubeUseCase: DeleteYoutubeUseCase
 ) : ViewModel() {
 
@@ -28,7 +30,11 @@ class PlaylistViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val allPlaylists = getAllPlaylistsUseCase()
             playLists.postValue(allPlaylists)
-            allPlaylists[0].id?.let { getSelectedYoutubesById(it) }
+            if (allPlaylists.isNotEmpty()) {
+                allPlaylists[0].id?.let { getSelectedYoutubesById(it) }
+            } else {
+                getSelectedYoutubesById(-1)
+            }
         }
     }
 
@@ -41,7 +47,7 @@ class PlaylistViewModel(
 
     fun updatePlaylist(playlist: Playlist) {
         viewModelScope.launch(Dispatchers.IO) {
-            updatePlaylist(playlist)
+            updatePlaylistUseCase(playlist)
         }
     }
 
@@ -54,14 +60,15 @@ class PlaylistViewModel(
 
     fun getSelectedYoutubesById(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            val selectedYoutubes = getSelectedYoutubes(id)
+            val selectedYoutubes = getSelectedYoutubesUseCase(id)
             youtubes.postValue(selectedYoutubes)
         }
     }
 
-    fun deleteYoutubeById(id: Int) {
+    fun deleteYoutubeById(id: Int, selectedPlaylistId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             deleteYoutubeUseCase(id)
+            getSelectedYoutubesById(selectedPlaylistId)
         }
     }
 

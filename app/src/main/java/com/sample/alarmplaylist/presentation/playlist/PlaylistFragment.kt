@@ -13,8 +13,8 @@ import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.data.entity.Playlist
 import com.sample.alarmplaylist.data.entity.Youtube
 import com.sample.alarmplaylist.databinding.FragmentPlaylistBinding
-import com.sample.alarmplaylist.playlist.adapter.MusicListAdapter
-import com.sample.alarmplaylist.playlist.add_playlist.AddPlaylistActivity
+import com.sample.alarmplaylist.presentation.shared_adapters.MusicListAdapter
+import com.sample.alarmplaylist.presentation.add_playlist.AddPlaylistActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -32,7 +32,12 @@ class PlaylistFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // 플레이리스트 혹은 음악 정보가 변경 될 때, recyclerview update
-        viewModel.playLists.observe(viewLifecycleOwner) { playlists -> initPlaylists(playlists) }
+        viewModel.playLists.observe(viewLifecycleOwner) { playlists ->
+            if (playlists.isNotEmpty()) {
+                selectedPlaylistId = playlists[0].id!!
+            }
+            initPlaylists(playlists)
+        }
         viewModel.youtubes.observe(viewLifecycleOwner) { youtubes -> initYoutubes(youtubes) }
 
         _binding = FragmentPlaylistBinding.inflate(inflater, container, false)
@@ -129,7 +134,7 @@ class PlaylistFragment : Fragment() {
         musicListRecyclerViewAdapter.listener = (object : MusicListAdapter.AdapterListener {
             // 음악 목록의 '더보기' 메뉴에서 '삭제'를 클릭하였을 경우 해당 음악 삭제
             override fun deleteMusic(id: Int) {
-                viewModel.deleteYoutubeById(id)
+                viewModel.deleteYoutubeById(id, selectedPlaylistId)
                 Toast.makeText(activity, getString(R.string.delete_music), Toast.LENGTH_SHORT).show()
             }
         })

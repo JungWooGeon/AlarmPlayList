@@ -1,4 +1,4 @@
-package com.sample.alarmplaylist.playlist.play_youtube
+package com.sample.alarmplaylist.presentation.play_youtube
 
 import android.app.KeyguardManager
 import android.content.Context
@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -15,9 +14,10 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.sample.alarmplaylist.Constants
 import com.sample.alarmplaylist.R
-import com.sample.alarmplaylist.databinding.ActivityYoutubePlayBinding
-import com.sample.alarmplaylist.playlist.adapter.MusicListAdapter
 import com.sample.alarmplaylist.data.entity.Youtube
+import com.sample.alarmplaylist.databinding.ActivityYoutubePlayBinding
+import com.sample.alarmplaylist.presentation.shared_adapters.MusicListAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * 실질적인 알람이 실행되는 Activity
@@ -35,7 +35,7 @@ class YoutubePlayActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityYoutubePlayBinding
-    private lateinit var viewModel: YoutubePlayViewModel
+    private val viewModel by viewModel<YoutubePlayViewModel>()
 
     private var currentPlaylistPosition = DEFAULT_CURRENT_PLAY_LIST_POSITION
     private lateinit var musicListRecyclerViewAdapter: MusicListAdapter
@@ -43,14 +43,13 @@ class YoutubePlayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[YoutubePlayViewModel::class.java]
         turnScreenOnAndKeyguardOff()
 
         binding = ActivityYoutubePlayBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.readYoutubeList(applicationContext, intent.getIntExtra(Constants.PLAYLIST_ID, INTENT_PLAYLIST_ID_DEFAULT_VALUE))
-        viewModel.youtubeList.observe(this) { list -> initMusicList(list)}
+        viewModel.getSelectedYoutubesById(intent.getIntExtra(Constants.PLAYLIST_ID, INTENT_PLAYLIST_ID_DEFAULT_VALUE))
+        viewModel.youtubes.observe(this) { list -> initMusicList(list)}
 
         // youtubePlayerView 설정
         lifecycle.addObserver(binding.youtubePlayerView)
@@ -81,9 +80,7 @@ class YoutubePlayActivity : AppCompatActivity() {
                     or WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON)
         }
         val keyguardMgr = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            keyguardMgr.requestDismissKeyguard(this, null)
-        }
+        keyguardMgr.requestDismissKeyguard(this, null)
     }
 
     // init musicList recyclerview

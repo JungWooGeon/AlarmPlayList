@@ -1,10 +1,10 @@
-package com.sample.alarmplaylist.playlist.api_retrofit
+package com.sample.alarmplaylist.data.network
 
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface SearchVideoInterface {
+interface SearchYoutubeInterface {
 
     @GET("search")
     fun getSearchResult(

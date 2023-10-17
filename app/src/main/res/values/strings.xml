@@ -7,8 +7,6 @@
     <string name="select_playlist_dialog">SelectPlaylistDialog</string>
     <string name="rename_playlist_dialog">RenamePlayListDialog</string>
 
-    <string name="youtube_api_search">https://www.googleapis.com/youtube/v3/</string>
-
     <string name="alarm">알람</string>
     <string name="playlist">플레이리스트</string>
     <string name="delete">삭제</string>
@@ -31,6 +29,7 @@
     <string name="complete_add_alarm">알람이 설정되었습니다</string>
     <string name="complete_set_playlist">플레이리스트가 설정되었습니다</string>
     <string name="reset_playlist_setting">플레이리스트 설정을 다시 해주세요</string>
+    <string name="delete_alarm">알람이 삭제되었습니다</string>
     <string name="delete_playlist">플레이리스트가 삭제되었습니다</string>
     <string name="delete_music">음악이 삭제되었습니다</string>
     <string name="title">"제목이 </string>

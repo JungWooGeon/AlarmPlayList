@@ -29,7 +29,7 @@
             android:exported="true" />
 
         <activity
-            android:name="com.sample.alarmplaylist.playlist.add_playlist.AddPlaylistActivity"
+            android:name="com.sample.alarmplaylist.presentation.add_playlist.AddPlaylistActivity"
             android:exported="true" />
 
         <receiver
@@ -39,7 +39,7 @@
         <service android:name="com.sample.alarmplaylist.presentation.notification.AlarmService" />
 
         <activity
-            android:name="com.sample.alarmplaylist.playlist.play_youtube.YoutubePlayActivity"
+            android:name="com.sample.alarmplaylist.presentation.play_youtube.YoutubePlayActivity"
             android:exported="true" />
 
     </application>

@@ -1,4 +1,4 @@
-package com.sample.alarmplaylist.playlist.api_retrofit
+package com.sample.alarmplaylist.data.network
 
 import android.graphics.pdf.PdfDocument
 import android.os.Parcelable

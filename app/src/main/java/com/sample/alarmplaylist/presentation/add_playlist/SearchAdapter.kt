@@ -1,4 +1,4 @@
-package com.sample.alarmplaylist.playlist.adapter
+package com.sample.alarmplaylist.presentation.add_playlist
 
 import android.view.LayoutInflater
 import android.view.View
@@ -18,9 +18,6 @@ import com.sample.alarmplaylist.data.entity.Youtube
  * AddPlaylistActivity 에서 사용하는 검색 결과 recyclerview adapter
  */
 class SearchAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
-
-    // AddPlayListActivity 와 통신하기 위한 listener
-    interface AdapterListener { fun onAddButtonClick(pos: Int) }
 
     var listener: AdapterListener? = null
     var list = ArrayList<Youtube>()
@@ -49,7 +46,7 @@ class SearchAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter<Sea
         })
 
         holder.title.text = list[position].title
-        holder.addPlayList.setOnClickListener { listener?.onAddButtonClick(position) }
+        holder.addPlayList.setOnClickListener { listener?.onAddButtonClick(list[holder.absoluteAdapterPosition]) }
     }
 
     override fun getItemCount(): Int {
@@ -60,4 +57,7 @@ class SearchAdapter(private val lifecycle: Lifecycle) : RecyclerView.Adapter<Sea
         holder.youtubePlayerView.release()
         super.onViewRecycled(holder)
     }
+
+    // AddPlayListActivity 와 통신하기 위한 listener
+    interface AdapterListener { fun onAddButtonClick(youtube: Youtube) }
 }

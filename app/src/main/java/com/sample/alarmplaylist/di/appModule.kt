@@ -20,7 +20,10 @@ import com.sample.alarmplaylist.domain.playlist.GetAllPlaylistsUseCase
 import com.sample.alarmplaylist.domain.playlist.UpdatePlaylistUseCase
 import com.sample.alarmplaylist.domain.youtube.AddYoutubeUseCase
 import com.sample.alarmplaylist.domain.youtube.DeleteYoutubeUseCase
-import com.sample.alarmplaylist.domain.youtube.GetSelectedYoutubes
+import com.sample.alarmplaylist.domain.youtube.GetSelectedYoutubesUseCase
+import com.sample.alarmplaylist.domain.youtube.SearchYoutubeUseCase
+import com.sample.alarmplaylist.presentation.play_youtube.YoutubePlayViewModel
+import com.sample.alarmplaylist.presentation.add_playlist.AddPlaylistViewModel
 import com.sample.alarmplaylist.presentation.playlist.PlaylistViewModel
 import com.sample.alarmplaylist.presentation.add_alarm.AddAlarmViewModel
 import com.sample.alarmplaylist.presentation.alarm.AlarmViewModel
@@ -34,10 +37,14 @@ val appModule = module {
     single { PlaylistDataBase.getInstance(get()) }
     single { YoutubeDataBase.getInstance(get()) }
 
+    // Retrofit 인스턴스 제공
+    single { provideSearchYoutubeRetrofit() }
+    single { provideSearchYoutubeInterface(get()) }
+
     // Repository 제공
     single<AlarmRepository> { AlarmRepositoryImpl(get()) }
     single<PlaylistRepository> { PlaylistRepositoryImpl(get()) }
-    single<YoutubeRepository> { YoutubeRepositoryImpl(get()) }
+    single<YoutubeRepository> { YoutubeRepositoryImpl(get(), get()) }
 
     // UseCase들 제공
     // alarm
@@ -54,9 +61,10 @@ val appModule = module {
     factory { UpdatePlaylistUseCase(get()) }
 
     //youtube
-    factory { GetSelectedYoutubes(get()) }
+    factory { GetSelectedYoutubesUseCase(get()) }
     factory { AddYoutubeUseCase(get()) }
     factory { DeleteYoutubeUseCase(get()) }
+    factory { SearchYoutubeUseCase(get()) }
 
     // ViewModel 제공
     viewModel {
@@ -86,8 +94,22 @@ val appModule = module {
             getAllPlaylistsUseCase = get(),
             addPlaylistUseCase = get(),
             deletePlaylistUseCase = get(),
-            getSelectedYoutubes = get(),
+            updatePlaylistUseCase = get(),
+            getSelectedYoutubesUseCase = get(),
             deleteYoutubeUseCase = get()
+        )
+    }
+
+    viewModel {
+        AddPlaylistViewModel(
+            addYoutubeUseCase = get(),
+            searchYoutubeUseCase = get()
+        )
+    }
+
+    viewModel {
+        YoutubePlayViewModel(
+            getSelectedYoutubesUseCase = get()
         )
     }
 }
