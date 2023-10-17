@@ -14,8 +14,99 @@ Android 알람 실행 시 직접 만든 플레이리스트에 있는 음악 목�
 ### 🛠 사용
  - android, android studio
  - kotlin
- - MVVM, Room DB, Retrofit2, Glide, AlarmManager, Notification, Coroutine
+ - MVVM, Clean Architecture, koin, Room DB, Retrofit2, Glide, AlarmManager, Notification, Coroutine
  - BroadcastReceiver, Service
+
+<br><br>
+
+### 🧩 구조
+```
+|── app
+|   └── di
+|       ├── appModule.kt
+|       └── ProvideAPI.kt
+|
+│── presentation
+│   └── add_alarm
+│   │   ├── AddAlarmActivity.kt
+│   │   └── AddAlarmViewModel.kt
+│   ├── add_playlist
+│   │   ├── AddPlaylistActivity.kt
+│   │   ├── AddPlaylistViewModel.kt
+│   │   └── SearchAdapter.kt
+│   ├── alarm
+│   │   ├── AlarmAdapter.kt
+│   │   ├── AlarmFragment.kt
+│   │   └── AlarmViewModel.kt
+│   ├── notification
+│   │   ├── AlarmReceiver.kt
+│   │   └── AlarmService.kt
+│   ├── play_youtube
+│   │   ├── YoutubePlayActivity.kt
+│   │   └── YoutubePlayViewModel.kt
+│   ├── playlist
+│   │   ├── PlaylistAdapter.kt
+│   │   ├── PlaylistFragment.kt
+│   │   ├── PlaylistViewModel.kt
+│   │   └── RenamePlaylistDialog.kt
+│   ├── select_playlist
+│   │   ├── SelectPlaylistAdapter.kt
+│   │   ├── SelectPlaylistDialog.kt
+│   │   └── SelectPlaylistViewModel.kt
+│   ├── shared_adapters
+│   │   └── MusicListAdapter.kt
+│   └── MainActivity.kt
+│
+├── domain
+│   ├── alarm
+│   │   ├── AddAlarmUseCase.kt
+│   │   ├── DeleteAlarmUseCase.kt
+│   │   ├── GetAllAlarmsUseCase.kt
+│   │   ├── GetLastAlarmUseCase.kt
+│   │   └── updateAlarmUseCase.kt
+│   ├── playlist
+│   │   ├── AddPlaylistUseCase.kt
+│   │   ├── DeletePlaylistUseCase.kt
+│   │   ├── GetAllPlaylistUseCase.kt
+│   │   └── UpdatePlaylistUseCase.kt
+│   └── youtube
+│       ├── AddYoutubeUseCase.kt
+│       ├── DeleteYoutubeUseCase.kt
+│       ├── GetSelectedYoutubes.kt
+│       └── SearchYoutubeUseCase.kt
+│
+├── data
+│   ├── db
+│   │   ├── alarm
+│   │   │   ├── AlarmDao.kt
+│   │   │   └── AlarmDataBase.kt
+│   │   ├── playlist
+│   │   │   ├── PlaylistDao.kt
+│   │   │   └── PlaylistDataBase.kt
+│   │   ├── youtube
+│   │   │   ├── PlaylistDao.kt
+│   │   │   └── PlaylistDataBase.kt
+│   ├── entity
+│   │   ├── Alarm.kt
+│   │   ├── Playlist.kt
+│   │   └── Youtube.kt
+│   ├── network
+│   │   ├── SearchYoutubeInterface
+│   │   └── SearchYoutubeResponse.kt
+│   └── repository
+│       ├── alarm
+│       │   ├── AlarmRepository
+│       │   └── AlarmRepositoryImpl.kt
+│       ├── playlist
+│       │   ├── PlaylistRepository
+│       │   └── PlaylistRepositoryImpl.kt
+│       └── youtube
+│           ├── YoutubeRepository
+│           └── YoutubeRepositoryImpl.kt
+│   
+├── AlarmApplication.kt
+└── Constants.kt
+```
 
 <br><br>
 
