@@ -18,6 +18,7 @@ import com.sample.alarmplaylist.data.entity.Youtube
 import com.sample.alarmplaylist.databinding.ActivityYoutubePlayBinding
 import com.sample.alarmplaylist.presentation.shared_adapters.MusicListAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.system.exitProcess
 
 /**
  * 실질적인 알람이 실행되는 Activity
@@ -61,6 +62,7 @@ class YoutubePlayActivity : AppCompatActivity() {
         Toast.makeText(this@YoutubePlayActivity, getString(R.string.finish_alarm), Toast.LENGTH_SHORT).show()
         // 현재 사용하고 있는 youtubePlayerView 는 종료 시 release 가 필요
         binding.youtubePlayerView.release()
+
         super.onDestroy()
     }
 
