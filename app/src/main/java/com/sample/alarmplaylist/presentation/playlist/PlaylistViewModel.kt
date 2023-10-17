@@ -3,7 +3,6 @@ package com.sample.alarmplaylist.presentation.playlist
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sample.alarmplaylist.R
 import com.sample.alarmplaylist.data.entity.Playlist
 import com.sample.alarmplaylist.data.entity.Youtube
 import com.sample.alarmplaylist.domain.playlist.AddPlaylistUseCase
@@ -24,8 +23,6 @@ class PlaylistViewModel(
 
     val playLists = MutableLiveData<List<Playlist>>()
     val youtubes = MutableLiveData<List<Youtube>>()
-
-    var selectPlaylistID = 0
 
     fun loadPlaylists() {
         viewModelScope.launch(Dispatchers.IO) {

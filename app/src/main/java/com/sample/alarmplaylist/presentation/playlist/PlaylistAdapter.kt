@@ -18,10 +18,10 @@ import com.sample.alarmplaylist.data.entity.Playlist
 /**
  * PlaylistFragment 플레이리스트 recycler view adapter
  */
-class PlayListAdapter(
+class PlaylistAdapter(
         private val applicationContext: Context,
         private val menuInflater: MenuInflater
-    ): RecyclerView.Adapter<PlayListAdapter.MyViewHolder>() {
+    ): RecyclerView.Adapter<PlaylistAdapter.MyViewHolder>() {
 
     companion object {
         private const val DEFAULT_IMAGE_VIEW_ALPHA = 1F

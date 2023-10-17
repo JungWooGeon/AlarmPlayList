@@ -12,7 +12,7 @@ import com.sample.alarmplaylist.databinding.RenamePlaylistDialogBinding
 /**
  * 플레이리스트 이름을 변경할 수 있는 dialog 로 listener 를 통해 PlaylistFragment 로 변경될 이름을 전달
  */
-class RenamePlayListDialog(listener: DialogListener) : DialogFragment() {
+class RenamePlaylistDialog(listener: DialogListener) : DialogFragment() {
 
     // PlaylistFragment 와 통신할 Listener
     interface DialogListener { fun rename(title: String) }

@@ -72,9 +72,9 @@ class PlaylistFragment : Fragment() {
 
     // init playlist recyclerview
     private fun initPlaylists(playList: List<Playlist>) {
-        val playListRecyclerViewAdapter = PlayListAdapter(requireActivity().applicationContext, requireActivity().menuInflater)
+        val playListRecyclerViewAdapter = PlaylistAdapter(requireActivity().applicationContext, requireActivity().menuInflater)
 
-        playListRecyclerViewAdapter.listener = (object : PlayListAdapter.AdapterListener {
+        playListRecyclerViewAdapter.listener = (object : PlaylistAdapter.AdapterListener {
             // 이미지 선택 시, 선택한 이미지에 해당하는 정보를 조회하여 Model 에 반영
             override fun selectImg(id: Int) {
                 selectedPlaylistId = id
@@ -83,7 +83,7 @@ class PlaylistFragment : Fragment() {
 
             // 플레이리스트의 '더보기' 메뉴에서 '이름 변경'을 클릭하였을 경우 RenamePlayListDialog 를 띄움
             override fun renamePlayList(pos: Int, playlist: Playlist) {
-                val dialog = RenamePlayListDialog((object: RenamePlayListDialog.DialogListener {
+                val dialog = RenamePlaylistDialog((object: RenamePlaylistDialog.DialogListener {
                     override fun rename(title: String) {
                         // 이름을 정상적으로 변경하면 DB 에 반영 후, recyclerview 새로고침
                         playlist.playListTitle = title
