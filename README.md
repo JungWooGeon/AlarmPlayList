@@ -26,7 +26,7 @@ Android 알람 실행 시 직접 만든 플레이리스트에 있는 음악 목�
 |   └── ProvideAPI.kt
 |
 │── presentation
-│   └── add_alarm
+│   ├── add_alarm
 │   │   ├── AddAlarmActivity.kt
 │   │   └── AddAlarmViewModel.kt
 │   ├── add_playlist
