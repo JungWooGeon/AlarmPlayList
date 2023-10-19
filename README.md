@@ -82,9 +82,9 @@ Android 알람 실행 시 직접 만든 플레이리스트에 있는 음악 목�
 │   │   ├── playlist
 │   │   │   ├── PlaylistDao.kt
 │   │   │   └── PlaylistDataBase.kt
-│   │   ├── youtube
-│   │   │   ├── PlaylistDao.kt
-│   │   │   └── PlaylistDataBase.kt
+│   │   └── youtube
+│   │       ├── PlaylistDao.kt
+│   │       └── PlaylistDataBase.kt
 │   ├── entity
 │   │   ├── Alarm.kt
 │   │   ├── Playlist.kt
