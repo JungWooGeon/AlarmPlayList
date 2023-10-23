@@ -62,7 +62,7 @@ Android 알람 실행 시 직접 만든 플레이리스트에 있는 음악 목�
 │   │   ├── DeleteAlarmUseCase.kt
 │   │   ├── GetAllAlarmsUseCase.kt
 │   │   ├── GetLastAlarmUseCase.kt
-│   │   └── updateAlarmUseCase.kt
+│   │   └── UpdateAlarmUseCase.kt
 │   ├── playlist
 │   │   ├── AddPlaylistUseCase.kt
 │   │   ├── DeletePlaylistUseCase.kt
