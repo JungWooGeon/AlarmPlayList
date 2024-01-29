@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -124,11 +125,30 @@ class AddAlarmActivity : AppCompatActivity() {
                 }
             }
 
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+            if (checkAlarmExactPermission()) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+            }
 
             Toast.makeText(this, getString(R.string.complete_add_alarm), Toast.LENGTH_SHORT).show()
         }
 
         finish()
+    }
+
+    // Special Permission 에 대한 권한 체크
+    private fun checkAlarmExactPermission(): Boolean {
+        var result = false
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if ((applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager)
+                    .canScheduleExactAlarms()
+            ) {
+                result = true
+            }
+        } else {
+            result = true
+        }
+
+        return result
     }
 }
