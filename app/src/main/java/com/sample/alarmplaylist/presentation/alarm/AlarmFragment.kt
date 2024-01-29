@@ -129,15 +129,15 @@ class AlarmFragment : Fragment() {
         viewModel.updateAlarm(alarm)
 
         // isCheck == true 일 경우 알람 설정, isCheck == false 일 경우 알람 해제
-        val alarmManager = requireActivity().applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(requireActivity().applicationContext, AlarmReceiver::class.java).apply {
+        val alarmManager = requireContext().applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(requireContext().applicationContext, AlarmReceiver::class.java).apply {
             putExtra(Constants.ALARM_ID, alarm.id)
             putExtra(Constants.ALARM_HOUR, alarm.alarmHour)
             putExtra(Constants.ALARM_MINUTE, alarm.alarmMinute)
             putExtra(Constants.PLAYLIST_ID, alarm.playlistId)
             putExtra(Constants.PLAYLIST_TITLE, alarm.playlistName)
         }
-        val pendingIntent = PendingIntent.getBroadcast(requireActivity().applicationContext, alarm.id!!, intent, Constants.ALARM_FLAG)
+        val pendingIntent = PendingIntent.getBroadcast(requireContext().applicationContext, alarm.id!!, intent, Constants.ALARM_FLAG)
 
         if (isChecked) {
             val calendar = Calendar.getInstance().apply {
@@ -149,8 +149,20 @@ class AlarmFragment : Fragment() {
                 }
             }
 
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-            Toast.makeText(activity, getString(R.string.complete_add_alarm), Toast.LENGTH_SHORT).show()
+            // Special Permission 에 대한 권한 체크
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if ((requireContext().applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager)
+                        .canScheduleExactAlarms()
+                ) {
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+                    Toast.makeText(requireContext(), getString(R.string.complete_add_alarm), Toast.LENGTH_SHORT).show()
+                } else {
+                    startActivity(Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM))
+                }
+            } else {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+                Toast.makeText(requireContext(), getString(R.string.complete_add_alarm), Toast.LENGTH_SHORT).show()
+            }
         } else {
             // AlarmManager cancel
             alarmManager.cancel(pendingIntent)
